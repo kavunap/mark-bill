@@ -43,15 +43,10 @@
 						<div class="nav-menus-wrapper">
 							<ul class="nav-menu">
 							
-								<li class="active"><a href="/home">Home<span class="submenu-indicator"></span></a>
+								<li class="active"><a href="/">Home<span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
-										<li><a href="/home">Home 1</a></li>
-										<li><a href="home-2.html">Home 2</a></li>
-										<li><a href="home-3.html">Home 3</a></li>
-										<li><a href="home-4.html">Home 4</a></li>
-										<li><a href="home-5.html">Home 5</a></li>
-										<li><a href="home-6.html">Home 6</a></li>
-										<li><a href="home-7.html">Home 7</a></li>
+										<li><a href="/">Home 1</a></li>
+										<li><a href="/">Home 2</a></li>
 									</ul>
 								</li>
 								
@@ -115,7 +110,7 @@
 									</ul>
 								</li>
 								
-								<li><a href="dashboard.html">Dashboard</a></li>
+								<li><a href="">Dashboard</a></li>
 								
 							</ul>
 							
