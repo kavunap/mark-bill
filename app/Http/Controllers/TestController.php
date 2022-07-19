@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Test;
 use App\Models\Course;
 use Illuminate\Http\Request;
-use App\Models\Test;
 
 /**
- * Class CourseController
+ * Class TestController
  * @package App\Http\Controllers
  */
-class CourseController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +19,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate();
+        $tests = Test::paginate();
 
-        return view('course.index', compact('courses'))
-            ->with('i', (request()->input('page', 1) - 1) * $courses->perPage());
+        return view('test.index', compact('tests'))
+            ->with('i', (request()->input('page', 1) - 1) * $tests->perPage());
     }
 
     /**
@@ -32,8 +32,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $course = new Course();
-        return view('course.create', compact('course'));
+        $test = new Test();
+        return view('test.create', compact('test'));
     }
 
     /**
@@ -44,12 +44,11 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Course::$rules);
+        request()->validate(Test::$rules);
+        $course=Course::find($request->course_id);
 
-        $course = Course::create($request->all());
-
-        return redirect()->route('classrooms.show',$course->classroom->id)
-            ->with('success', 'Course created successfully.');
+        $test = Test::create($request->all());
+        return redirect()->back()->with('success', 'Test created successfully.');
     }
 
     /**
@@ -60,11 +59,13 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id);
-        $test = new Test;
-        $students = $course->classroom->students;
+        $test = Test::find($id);
+        $students = $test->course->classroom->students;
 
-        return view('course.show', compact('course','students','test'));
+        foreach ($students as $student) {
+            
+        }
+        return view('test.show', compact('test','students'));
     }
 
     /**
@@ -75,26 +76,26 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        $course = Course::find($id);
+        $test = Test::find($id);
 
-        return view('course.edit', compact('course'));
+        return view('test.edit', compact('test'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Course $course
+     * @param  Test $test
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Test $test)
     {
-        request()->validate(Course::$rules);
+        request()->validate(Test::$rules);
 
-        $course->update($request->all());
+        $test->update($request->all());
 
-        return redirect()->route('courses.index')
-            ->with('success', 'Course updated successfully');
+        return redirect()->route('tests.index')
+            ->with('success', 'Test updated successfully');
     }
 
     /**
@@ -104,9 +105,9 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        $course = Course::find($id)->delete();
+        $test = Test::find($id)->delete();
 
-        return redirect()->route('courses.index')
-            ->with('success', 'Course deleted successfully');
+        return redirect()->route('tests.index')
+            ->with('success', 'Test deleted successfully');
     }
 }

@@ -30,6 +30,8 @@ class Course extends Model
 		'credits' => 'required',
 		'hours' => 'required',
 		'classroom_id' => 'required',
+        'user_id'=>'required',
+        'max'=>'required'
     ];
 
     protected $perPage = 20;
@@ -39,7 +41,7 @@ class Course extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','description','credits','hours','classroom_id'];
+    protected $fillable = ['title','description','credits','hours','classroom_id','user_id','max'];
 
 
     /**
@@ -53,9 +55,9 @@ class Course extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function marks()
+    public function tests()
     {
-        return $this->hasMany('App\Models\Mark', 'course_id', 'id');
+        return $this->hasMany('App\Models\Test', 'course_id', 'id');
     }
     
 

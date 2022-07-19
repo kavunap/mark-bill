@@ -107,4 +107,6 @@ class SchoolController extends Controller
         return redirect()->route('schools.index')
             ->with('success', 'School deleted successfully');
     }
+
+    
 }

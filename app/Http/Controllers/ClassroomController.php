@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\User;
+use App\Models\Student;
+use PDF;
 
 /**
  * Class ClassroomController
@@ -62,10 +65,12 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::find($id);
         $courses = $classroom->courses;
-        $students = $classroom->students;
+        // $students = $classroom->students;
+        $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id');
         $course = new Course();
+        $student = new Student();
 
-        return view('classroom.show', compact('classroom','students','courses','course'));
+        return view('classroom.show', compact('classroom','courses','course','teachers','student'));
     }
 
     /**
@@ -109,5 +114,17 @@ class ClassroomController extends Controller
 
         return redirect()->route('classrooms.index')
             ->with('success', 'Classroom deleted successfully');
+    }
+
+    public function genMission($id){
+        $classroom = Classroom::find($id);
+        return view('classroom.report',compact('classroom'));
+      }
+      
+    public function createPDF($id) {
+    $classroom = Classroom::find($id);
+
+    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'setIsRemoteEnabled'=>true])->loadView('classroom.report',compact('classroom'));   
+    return $pdf->download('murunda.pdf');
     }
 }

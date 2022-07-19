@@ -50,7 +50,7 @@ class StudentController extends Controller
         // return redirect()->route('classrooms.show',$student->classroom->id)
         //     ->with('success', 'Student created successfully.');
 
-            return redirect()->back()->with('success', 'Student created successfully.');;
+            return redirect()->back()->with('success', 'Student created successfully.');
     }
 
     /**

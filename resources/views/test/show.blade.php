@@ -1,36 +1,64 @@
 @extends('layouts.app')
 
+@section('template_title')
+    {{ $test->name ?? 'Show Test' }}
+@endsection
+
 @section('content')
+    <section class="content container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="float-left">
+                            <span class="card-title">Show Test</span>
+                        </div>
+                        <div class="float-right">
+                            <a class="btn btn-primary" href="{{ route('tests.index') }}"> Back</a>
+                        </div>
+                    </div>
 
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="">
-                <h2 id="h1">Course details </h2>
-                <div class="col-sm-6 pl-5">
-                    
-                    <p><strong>Title:</strong>{{ $course->title }}</p>
-                    <p><strong>Number of Credits:</strong>{{ $course->credits }}</p>
-                    <p><strong>Descriptions:</strong>{{ $course->description }}</p>
-                </div>
+                    <div class="card-body">
+                        
+                        <div class="form-group">
+                            <strong>Done On:</strong>
+                            {{ $test->done_on }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Term:</strong>
+                            {{ $test->term }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Type:</strong>
+                            {{ $test->type }}
+                        </div>
+                        <div class="form-group">
+                            <strong>Course title:</strong>
+                            {{ $test->course->title }}
+                        </div>
 
-                <div class="col-sm-6 pl-5">
-                    <p><strong>Hours specified:</strong>{{ $course->hours }}</p>
-                    <p><strong>Classroom:</strong>{{ $course->classroom->name }}</p>
-                    <p><strong>Registered At:</strong>{{ $course->created_at }}</p>
+                        <div class="form-group">
+                            <strong>Max:</strong>
+                            {{ $test->max }}
+                        </div>
+
+                    </div>
                 </div>
             </div>
-            
         </div>
-    </div>
+    </section>
+
+
+
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2 id="h1">List of students in {{ $course->classroom->name }} </h2>
+                <h2 id="h1">List of students in {{ $test->course->classroom->name }} </h2>
             </div>
             <div class="pull-right pl-5">
                 <a class="btn btn-success text-light" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
-                    data-attr="{{ route('courses.edit',$course->id) }}" title="Edit course"> <i class="fas fa-edit"></i>
+                    data-attr="{{ route('tests.edit',$test->id) }}" title="Edit test"> <i class="fas fa-edit"></i>
                 </a>
             </div>
             <div class="pull-right">
@@ -64,6 +92,7 @@
                 <th scope="col">No</th>
                 <th scope="col">Name</th>
                 <th scope="col" >Number</th>
+                <th scope="col" >Marks recorded</th>
                 <th scope="col" >Actions</th>
             </tr>
         </thead>
@@ -73,6 +102,7 @@
                     <td scope="row">{{ $student->id }}</td>
                     <td>{{ $student->name }}</td>
                     <td>{{ $student->st_code }}</td>
+                    <td>{{ $student->marks->count() }}</td>
                     <td class="form-inline">
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST">
 
@@ -96,7 +126,7 @@
                         </form>
 
                         <a data-toggle="modal" id="mediumButton" data-target="#mediumModal"
-                            data-attr="{{ route('marks.create') }}" title="Record Marks" data-st-id="{{ $student->id }}" data-c-id="{{ $course->id }}">
+                            data-attr="{{ route('marks.create') }}" title="Record Marks" data-st-id="{{ $student->id }}" data-t-id="{{ $test->id }}">
                             <i class="fas fa-book text-success  fa-lg"></i>
                         </a>
                     </td>
@@ -178,7 +208,7 @@
             event.preventDefault();
             let href = $(this).attr('data-attr');
             let st = $(this).attr('data-st-id');
-            let c = $(this).attr('data-c-id');
+            let t = $(this).attr('data-t-id');
             // $('#st').html('js id');
             // $('#c').html('js course');
             // $.ajax({
@@ -197,7 +227,7 @@
                     $('#mediumModal').modal("show");
                     $('#mediumBody').html(result).show();
                     $('#st').val(st);
-                    $('#c').val(c);
+                    $('#test').val(t);
                 },
                 complete: function() {
                     $('#loader').hide();
@@ -213,6 +243,4 @@
         });
 
     </script>
-
-    
 @endsection

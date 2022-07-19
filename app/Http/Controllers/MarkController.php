@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mark;
+use App\Models\Test;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 /**
@@ -32,7 +34,7 @@ class MarkController extends Controller
     public function create()
     {
         $mark = new Mark();
-        return view('mark.create2', compact('mark'));
+        return view('mark.create', compact('mark'));
     }
 
     /**
@@ -44,13 +46,24 @@ class MarkController extends Controller
     public function store(Request $request)
     {
         request()->validate(Mark::$rules);
-        $input = $request->all();
-        // $input['student_id']= 
-        $mark = Mark::create($request->all());
+        $test= Test::find($request->test_id);
+        $student=Student::find($request->user_id);
+        $recordings=Mark::where('student_id','=',$request->student_id)->where('test_id','=',$request->test_id)->count();
+        if($request->marks > $test->max){
+            return redirect()->back()->withErrors('Marks can not be greater than maximum');
+        }
+        elseif($recordings>=1){
+            return redirect()->back()->withErrors('This student`s already recorded for this test');
+        }
+        else{
+            $mark = Mark::create($request->all());
+            return redirect()->back()->with('success', "Marks recorded successfully.{$recordings}");
+        }
+        
 
         // return redirect()->route('marks.index')
         //     ->with('success', 'Mark created successfully.');
-        return redirect()->back()->with('success', 'Mark created successfully.');
+        
     }
 
     /**

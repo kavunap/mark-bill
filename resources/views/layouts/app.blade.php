@@ -57,7 +57,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -73,10 +73,10 @@
                                     </form>
                                 </div>
                             </li>
-                            <li><a href="/students">Students</a></li>
-										<li><a href="/classrooms">Classes</a></a></li>
-										<li><a href="/schools">Schools</a></li>
-										<li><a href="/courses">Courses</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/students">Students</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/classrooms">Classes</a></a></li>
+                            <li class="nav-item"><a class="nav-link" href="/schools">Schools</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/courses">Courses</a></li>
                         @endguest
                     </ul>
                 </div>
