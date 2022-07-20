@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\Student;
 
 /**
  * Class ClassroomController
@@ -63,9 +64,10 @@ class ClassroomController extends Controller
         $classroom = Classroom::find($id);
         $courses = $classroom->courses;
         $students = $classroom->students;
+        $new_student = new Student();
         $course = new Course();
 
-        return view('classroom.show', compact('classroom','students','courses','course'));
+        return view('classroom.show', compact('classroom','students','courses','course','new_student'));
     }
 
     /**

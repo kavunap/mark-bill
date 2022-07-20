@@ -10,11 +10,11 @@
             {!! $errors->first('description', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::text('credits', $course->credits, ['class' => 'form-control' . ($errors->has('credits') ? ' is-invalid' : ''), 'placeholder' => 'Credits']) }}
+            {{ Form::number('credits', $course->credits, ['class' => 'form-control' . ($errors->has('credits') ? ' is-invalid' : ''), 'placeholder' => 'Credits','min'=>1]) }}
             {!! $errors->first('credits', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::text('hours', $course->hours, ['class' => 'form-control' . ($errors->has('hours') ? ' is-invalid' : ''), 'placeholder' => 'Hours']) }}
+            {{ Form::number('hours', $course->hours, ['class' => 'form-control' . ($errors->has('hours') ? ' is-invalid' : ''), 'placeholder' => 'Hours','min'=>1]) }}
             {!! $errors->first('hours', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         

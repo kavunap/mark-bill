@@ -36,14 +36,24 @@
                         @endif
                         <div class="row">
                             <div class="col-sm-4">
-                                <h3><strong>{{ $classroom->students->count() }}</strong> Students</h3>
+                                {{-- <h3><strong>{{ $classroom->students->count() }}</strong> Students</h3>
                                 @foreach ($students as $student )
                                     <div class="form-group">
                                         
                                         <a href="{{ route('students.show',$student->id) }}"><strong>{{ $student->name }}</strong></a> 
                                         <strong>ID:</strong> {{ $student->st_code }}
                                     </div>
-                                @endforeach
+                                @endforeach --}}
+                                <div class="form-group">
+                                    <strong>Name:</strong>
+                                    {{ $classroom->name }}
+                                </div>
+                                <div class="form-group">
+                                    <a href="{{ route('schools.show',$classroom->school->id) }}">
+                                        <strong>School:</strong>
+                                        {{ $classroom->school->name }}
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-sm-4">
                                 <h3><strong>Add</strong> Course</h3>
@@ -59,7 +69,7 @@
                                 <h3>Add Student</h3>
                                     <form action="{{ route('students.store') }}" method="POST">
                                         @csrf
-                                        <input type="text" name="name" id="name" placeholder="Student Name"><br>
+                                        {{-- <input type="text" name="name" id="name" placeholder="Student Name"><br>
                                         @if ($errors->has('name'))
                                             <span class="text-danger">{{ $errors->first('name') }}</span> <br>
                                         @endif
@@ -71,10 +81,11 @@
                                         <input type="text" name="st_code" id="code" placeholder="Student Reg Number"><br>
                                         @if ($errors->has('st_code'))
                                             <span class="text-danger">{{ $errors->first('st_code') }}</span> <br>
-                                        @endif
-    
+                                        @endif --}}
+                                        @include('student.form')
+
                                         <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
-                                        <input type="submit">
+                                        {{-- <input type="submit"> --}}
                                     </form>
                             </div>
                         </div>
@@ -82,19 +93,8 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <strong>Name:</strong>
-                                    {{ $classroom->name }}
-                                </div>
-                                <div class="form-group">
-                                    <a href="{{ route('schools.show',$classroom->school->id) }}">
-                                        <strong>School:</strong>
-                                        {{ $classroom->school->name }}
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
+                            
+                            <div class="col-sm-4">
                                 <h3><strong>{{ $classroom->students->count() }}</strong> Students</h3>
                                 @foreach ($students as $student )
                                     <div class="form-group">
@@ -104,7 +104,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <h3><strong>{{ $classroom->courses->count() }}</strong> Courses</h3>
                                 @foreach ($courses as $course )
                                     <div class="form-group">
@@ -113,7 +113,10 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
+                                
+                            </div>
+                            {{-- <div class="col-sm-3">
                                 <h3>Add Student</h3>
                                     <form action="{{ route('students.store') }}" method="POST">
                                         @csrf
@@ -134,7 +137,7 @@
                                         <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
                                         <input type="submit">
                                     </form>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 

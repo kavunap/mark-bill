@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'MarkHub') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -73,10 +73,18 @@
                                     </form>
                                 </div>
                             </li>
-                            <li><a href="/students">Students</a></li>
-										<li><a href="/classrooms">Classes</a></a></li>
-										<li><a href="/schools">Schools</a></li>
-										<li><a href="/courses">Courses</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('schools.index') }}">{{ __('Schools') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('courses.index') }}">{{ __('Courses') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

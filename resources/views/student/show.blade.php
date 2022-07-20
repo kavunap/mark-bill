@@ -33,7 +33,7 @@
                             {{ $student->st_code }}
                         </div>
                         <a href="{{ route('classrooms.show',$student->classroom->id) }}">
-                            <strong>lass:</strong>
+                            <strong>Class:</strong>
                             {{ $student->classroom->name }}
                         </a>
 
