@@ -15,11 +15,11 @@ class SchoolSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
+        // $faker = \Faker\Factory::create();
         DB::table("schools")->insert([
-            "name" => $faker->name(),
-            "location" => $faker->safeEmail,
-            "type" => $faker->phoneNumber,
+            "name" => "GS Kigeme",
+            "location" => "Nyamagabe",
+            "type" => "REB",
             "user_id" => User::find(2)->id,
             // "gender" => $faker->randomElement(["male", "female", "others"]),
             // "address_info" => $faker->address,
