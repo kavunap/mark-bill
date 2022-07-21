@@ -16,12 +16,10 @@ class CreateMarksTable extends Migration
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
             $table->integer('marks');
-            $table->string('term');
-            $table->string('type')->default('exam');
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
-            $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->unsignedBigInteger('test_id');
+            $table->foreign('test_id')->references('id')->on('tests');
             $table->timestamps();
         });
     }

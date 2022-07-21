@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Test;
 
 /**
  * Class Course
@@ -29,7 +30,9 @@ class Course extends Model
 		'description' => 'required',
 		'credits' => 'required',
 		'hours' => 'required',
-		'classroom_id' => 'required',
+		// 'classroom_id' => 'required',
+        'user_id'=>'required',
+        'max'=>'required'
     ];
 
     protected $perPage = 20;
@@ -39,7 +42,7 @@ class Course extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','description','credits','hours','classroom_id'];
+    protected $fillable = ['title','description','credits','hours','classroom_id','user_id','max'];
 
 
     /**
@@ -53,10 +56,20 @@ class Course extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function marks()
+    public function tests()
     {
-        return $this->hasMany('App\Models\Mark', 'course_id', 'id');
+        return $this->hasMany('App\Models\Test');
     }
+
+    /**
+     * Get the test that owns the Course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    // public function test()
+    // {
+    //     return $this->belongsTo(Test::class);
+    // }
     
 
 }

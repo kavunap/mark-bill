@@ -6,6 +6,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MarkController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,16 +19,20 @@ use App\Http\Controllers\MarkController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/report', function () {
+    return view('classroom.report');
+});
 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 Route::resource('/students', StudentController::class)->middleware('auth');
 Route::resource('/schools', SchoolController::class)->middleware('auth');
 Route::resource('/classrooms', ClassroomController::class)->middleware('auth');
 Route::resource('/courses', CourseController::class)->middleware('auth');
 Route::resource('/marks', MarkController::class)->middleware('auth');
+Route::resource('/tests', TestController::class)->middleware('auth');
+Route::get('/document/{id}', [ClassroomController::class, 'genMission'])->name('generate');
+
+Route::get('/getDocument/{id}', [ClassroomController::class, 'createPDF'])->name('download');

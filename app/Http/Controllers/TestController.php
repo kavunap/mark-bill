@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\School;
+use App\Models\Test;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 /**
- * Class SchoolController
+ * Class TestController
  * @package App\Http\Controllers
  */
-class SchoolController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +19,10 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::paginate();
+        $tests = Test::paginate();
 
-        return view('school.index', compact('schools'))
-            ->with('i', (request()->input('page', 1) - 1) * $schools->perPage());
+        return view('test.index', compact('tests'))
+            ->with('i', (request()->input('page', 1) - 1) * $tests->perPage());
     }
 
     /**
@@ -31,8 +32,8 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        $school = new School();
-        return view('school.create', compact('school'));
+        $test = new Test();
+        return view('test.create', compact('test'));
     }
 
     /**
@@ -43,12 +44,11 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(School::$rules);
+        request()->validate(Test::$rules);
+        $course=Course::find($request->course_id);
 
-        $school = School::create($request->all());
-
-        return redirect()->route('schools.index')
-            ->with('success', 'School created successfully.');
+        $test = Test::create($request->all());
+        return redirect()->back()->with('success', 'Test created successfully.');
     }
 
     /**
@@ -59,10 +59,13 @@ class SchoolController extends Controller
      */
     public function show($id)
     {
-        $school = School::find($id);
-        $classrooms = $school->classrooms;
+        $test = Test::find($id);
+        $students = $test->course->classroom->students;
 
-        return view('school.show', compact('school','classrooms'));
+        foreach ($students as $student) {
+            
+        }
+        return view('test.show', compact('test','students'));
     }
 
     /**
@@ -73,26 +76,26 @@ class SchoolController extends Controller
      */
     public function edit($id)
     {
-        $school = School::find($id);
+        $test = Test::find($id);
 
-        return view('school.edit', compact('school'));
+        return view('test.edit', compact('test'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  School $school
+     * @param  Test $test
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, School $school)
+    public function update(Request $request, Test $test)
     {
-        request()->validate(School::$rules);
+        request()->validate(Test::$rules);
 
-        $school->update($request->all());
+        $test->update($request->all());
 
-        return redirect()->route('schools.index')
-            ->with('success', 'School updated successfully');
+        return redirect()->route('tests.index')
+            ->with('success', 'Test updated successfully');
     }
 
     /**
@@ -102,11 +105,9 @@ class SchoolController extends Controller
      */
     public function destroy($id)
     {
-        $school = School::find($id)->delete();
+        $test = Test::find($id)->delete();
 
-        return redirect()->route('schools.index')
-            ->with('success', 'School deleted successfully');
+        return redirect()->route('tests.index')
+            ->with('success', 'Test deleted successfully');
     }
-
-    
 }

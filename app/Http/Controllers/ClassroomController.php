@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\User;
 use App\Models\Student;
+use PDF;
+use Auth;
 
 /**
  * Class ClassroomController
@@ -13,6 +16,13 @@ use App\Models\Student;
  */
 class ClassroomController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('check_role')->except('index','show');
+        // $this->middleware('subscribed')->except('store');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -62,12 +72,27 @@ class ClassroomController extends Controller
     public function show($id)
     {
         $classroom = Classroom::find($id);
-        $courses = $classroom->courses;
-        $students = $classroom->students;
+        if(Auth::user()->user_role=='admin'){
+            $courses = $classroom->courses;
+        }
+        elseif(Auth::user()->user_role=='teacher'){
+            $courses = $classroom->courses->where('user_id',Auth::user()->id);
+        }
+        else{
+            $courses=Course::paginate();
+        }
+        
+        // $students = $classroom->students;
         $new_student = new Student();
+        $students = Student::where('classroom_id',$classroom->id)->paginate();
+        $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
         $course = new Course();
+        $student = new Student();
 
-        return view('classroom.show', compact('classroom','students','courses','course','new_student'));
+        return view('classroom.show', compact('classroom','students','courses','course','new_student','teachers'))
+            ->with('i', (request()->input('page', 1) - 1) * $students->perPage());
+        // return view('student.index', compact('students'))
+        //     ->with('i', (request()->input('page', 1) - 1) * $students->perPage());
     }
 
     /**
@@ -111,5 +136,17 @@ class ClassroomController extends Controller
 
         return redirect()->route('classrooms.index')
             ->with('success', 'Classroom deleted successfully');
+    }
+
+    public function genMission($id){
+        $classroom = Classroom::find($id);
+        return view('classroom.report',compact('classroom'));
+      }
+      
+    public function createPDF($id) {
+    $classroom = Classroom::find($id);
+
+    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'setIsRemoteEnabled'=>true])->loadView('classroom.report',compact('classroom'));   
+    return $pdf->download('murunda.pdf');
     }
 }

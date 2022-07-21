@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Mark
+    Test
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Mark') }}
+                                {{ __('Test') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('marks.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('tests.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -36,26 +36,28 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Marks</th>
-										<th>Student Id</th>
-										<th>Test Id</th>
+										<th>Done On</th>
+										<th>Term</th>
+										<th>Type</th>
+										<th>Course Id</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($marks as $mark)
+                                    @foreach ($tests as $test)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $mark->marks }}</td>
-											<td>{{ $mark->student_id }}</td>
-											<td>{{ $mark->test_id }}</td>
+											<td>{{ $test->done_on }}</td>
+											<td>{{ $test->term }}</td>
+											<td>{{ $test->type }}</td>
+											<td>{{ $test->course_id }}</td>
 
                                             <td>
-                                                <form action="{{ route('marks.destroy',$mark->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('marks.show',$mark->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('marks.edit',$mark->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                <form action="{{ route('tests.destroy',$test->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('tests.show',$test->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('tests.edit',$test->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
@@ -68,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $marks->links() !!}
+                {!! $tests->links() !!}
             </div>
         </div>
     </div>

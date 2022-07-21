@@ -17,8 +17,17 @@
             {{ Form::number('hours', $course->hours, ['class' => 'form-control' . ($errors->has('hours') ? ' is-invalid' : ''), 'placeholder' => 'Hours','min'=>1]) }}
             {!! $errors->first('hours', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-        
 
+        <div class="form-group">
+            {{ Form::number('max', $course->max, ['class' => 'form-control' . ($errors->has('max') ? ' is-invalid' : ''), 'placeholder' => 'Maximum marks']) }}
+            {!! $errors->first('max', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::select('user_id', $teachers, null, ['class' => 'form-control','placeholder'=>'Select Teacher']) !!} <br>
+            {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
+        </div>
+        
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button>

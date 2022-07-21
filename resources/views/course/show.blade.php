@@ -21,14 +21,14 @@
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <strong>Title:</strong>
                                     {{ $course->title }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Descriprion:</strong>
-                                    {{ $course->descriprion }}
+                                    {{ $course->description }}
                                 </div>
                                 <div class="form-group">
                                     <strong>Credits:</strong>
@@ -46,13 +46,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
-                                <h3><strong>{{ $course->classroom->students->count() }}</strong> Students</h3>
-                                @foreach ($course->classroom->students as $student )
+                            <div class="col-sm-4">
+                                <h3>Add test</h3>
+                                <form method="POST" action="{{ route('tests.store') }}"  role="form" enctype="multipart/form-data">
+                                    @csrf
+                                    @include('test.form')
+                                </form>
+                                
+                            </div>
+
+                            <div class="col-sm-4">
+                                <h3><strong>{{ $course->tests->count() }}</strong> Tests</h3>
+                                @foreach ($course->tests as $test )
                                     <div class="form-group">
                                         
-                                        <a href="{{ route('students.show',$student->id) }}"><strong>{{ $student->name }}</strong></a> 
-                                        <strong>ID:</strong> {{ $student->st_code }}
+                                        <a href="{{ route('tests.show',$test->id) }}"><strong>{{ $test->done_on }}</strong></a> 
+                                        <strong>Test Type:</strong> {{ $test->type }}
                                     </div>
                                 @endforeach
                             </div>

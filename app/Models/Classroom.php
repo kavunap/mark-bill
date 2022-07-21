@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Classroom
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Classroom extends Model
 {
+    use HasFactory;
     
     static $rules = [
 		'name' => 'required',

@@ -25,20 +25,12 @@
                             {{ $mark->marks }}
                         </div>
                         <div class="form-group">
-                            <strong>Term:</strong>
-                            {{ $mark->term }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Type:</strong>
-                            {{ $mark->type }}
-                        </div>
-                        <div class="form-group">
                             <strong>Student Id:</strong>
                             {{ $mark->student_id }}
                         </div>
                         <div class="form-group">
-                            <strong>Course Id:</strong>
-                            {{ $mark->course_id }}
+                            <strong>Test Id:</strong>
+                            {{ $mark->test_id }}
                         </div>
 
                     </div>

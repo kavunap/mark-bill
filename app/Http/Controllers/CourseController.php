@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Models\Test;
+use App\Models\User;
+use Auth;
 
 /**
  * Class CourseController
@@ -11,6 +14,12 @@ use Illuminate\Http\Request;
  */
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('check_role')->only('store');
+        // $this->middleware('subscribed')->except('store');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -60,9 +69,10 @@ class CourseController extends Controller
     public function show($id)
     {
         $course = Course::find($id);
+        $test = new Test;
         $students = $course->classroom->students;
 
-        return view('course.show1', compact('course','students'));
+        return view('course.show', compact('course','students','test'));
     }
 
     /**
@@ -73,9 +83,10 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
+        $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
         $course = Course::find($id);
 
-        return view('course.edit', compact('course'));
+        return view('course.edit', compact('course','teachers'));
     }
 
     /**
@@ -89,10 +100,17 @@ class CourseController extends Controller
     {
         request()->validate(Course::$rules);
 
-        $course->update($request->all());
+        $input=$request->all();
+        $input['classroom_id']=$course->classroom_id;
+        if ($course->update($input)) {
+            return redirect()->route('courses.index')
+                ->with('success', 'Course updated successfully');
+        }
+        else{
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        return redirect()->route('courses.index')
-            ->with('success', 'Course updated successfully');
+        
     }
 
     /**

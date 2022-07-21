@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
  */
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('check_role')->only('store','update','edit');
+        // $this->middleware('subscribed')->except('store');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +56,7 @@ class StudentController extends Controller
         // return redirect()->route('classrooms.show',$student->classroom->id)
         //     ->with('success', 'Student created successfully.');
 
-            return redirect()->back()->with('success', 'Student created successfully.');;
+            return redirect()->back()->with('success', 'Student created successfully.');
     }
 
     /**

@@ -6,15 +6,15 @@
 
 @section('content')
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -25,6 +25,9 @@
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('classrooms.index') }}"> Back</a>
+                        </div>
+                        <div class="float-right">
+                        <a class="btn btn-sm btn-primary " href="{{ route('generate',$classroom->id) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports</a>
                         </div>
                     </div>
                     
@@ -69,19 +72,6 @@
                                 <h3>Add Student</h3>
                                     <form action="{{ route('students.store') }}" method="POST">
                                         @csrf
-                                        {{-- <input type="text" name="name" id="name" placeholder="Student Name"><br>
-                                        @if ($errors->has('name'))
-                                            <span class="text-danger">{{ $errors->first('name') }}</span> <br>
-                                        @endif
-                                        <input type="text" name="parent_phone" id="phone" placeholder="Parent phone Number"><br>
-                                        @if ($errors->has('parent_phone'))
-                                            <span class="text-danger">{{ $errors->first('parent_phone') }}</span> <br>
-                                        @endif
-    
-                                        <input type="text" name="st_code" id="code" placeholder="Student Reg Number"><br>
-                                        @if ($errors->has('st_code'))
-                                            <span class="text-danger">{{ $errors->first('st_code') }}</span> <br>
-                                        @endif --}}
                                         @include('student.form')
 
                                         <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
@@ -94,18 +84,19 @@
                     <div class="card-body">
                         <div class="row">
                             
-                            <div class="col-sm-4">
+                            <div class="col-sm-8">
                                 <h3><strong>{{ $classroom->students->count() }}</strong> Students</h3>
-                                @foreach ($students as $student )
+                                {{-- @foreach ($students as $student )
                                     <div class="form-group">
                                         
                                         <a href="{{ route('students.show',$student->id) }}"><strong>{{ $student->name }}</strong></a> 
                                         <strong>ID:</strong> {{ $student->st_code }}
                                     </div>
-                                @endforeach
+                                @endforeach --}}
+                                @include('student.list')
                             </div>
                             <div class="col-sm-4">
-                                <h3><strong>{{ $classroom->courses->count() }}</strong> Courses</h3>
+                                <h3><strong>{{ $courses->count() }}</strong> Courses</h3>
                                 @foreach ($courses as $course )
                                     <div class="form-group">
                                         <a href="{{ route('courses.show',$course->id) }}"><strong>{{ $course->title }}</strong></a> 
