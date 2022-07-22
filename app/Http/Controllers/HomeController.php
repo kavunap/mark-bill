@@ -30,4 +30,11 @@ class HomeController extends Controller
         return view('dashboard');
     }
 
+    public function logout () {
+        //logout user
+        auth()->logout();
+        // redirect to homepage
+        return redirect('/');
+    }
+
 }

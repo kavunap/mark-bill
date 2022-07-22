@@ -85,6 +85,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

@@ -34,7 +34,7 @@
 								<ul>
 									<li>
 										<a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="crs_yuo12 w-auto text-white theme-bg">
-											<span class="embos_45"><i class="fas fa-sign-in-alt mr-1"></i>Sign In</span>
+											<span class="embos_45"><i class="fas fa-sign-in-alt mr-1"></i>Sign Inv</span>
 										</a>
 									</li>
 								</ul>
@@ -43,14 +43,7 @@
 						<div class="nav-menus-wrapper">
 							<ul class="nav-menu">
 							
-								<li class="active"><a href="/">Home<span class="submenu-indicator"></span></a>
-									<ul class="nav-dropdown nav-submenu">
-										<li><a href="/">Home 1</a></li>
-										<li><a href="/students">Students</a></li>
-										<li><a href="/classrooms">Classes</a></a></li>
-										<li><a href="/schools">Schools</a></li>
-										<li><a href="/courses">Courses</a></li>
-									</ul>
+								<li class="active"><a href="/">Home</a>
 								</li>
 								
 								<li><a href="#">Courses<span class="submenu-indicator"></span></a>
@@ -112,6 +105,21 @@
 										<li><a href="forgot.html">Forgot</a></li>
 									</ul>
 								</li>
+								@if(auth()->check())
+								<li class="active"><a href="/">Reports<span class="submenu-indicator"></span></a>
+									<ul class="nav-dropdown nav-submenu">
+										<li><a href="/students">Students</a></li>
+										<li><a href="/classrooms">Classes</a></a></li>
+										<li><a href="/schools">Schools</a></li>
+										<li><a href="/courses">Courses</a></li>
+									</ul>
+								</li>
+									<li><a href="#">Account<span class="submenu-indicator"></span></a>
+										<ul class="nav-dropdown nav-submenu">
+											<a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+										</ul>
+									</li>
+								@endif
 								
 								<li><a href="/dashboard">Dashboard</a></li>
 								

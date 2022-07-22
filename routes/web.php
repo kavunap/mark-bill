@@ -7,6 +7,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,4 @@ Route::resource('/tests', TestController::class)->middleware('auth');
 Route::get('/document/{id}', [ClassroomController::class, 'genMission'])->name('generate');
 
 Route::get('/getDocument/{id}', [ClassroomController::class, 'createPDF'])->name('download');
+Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
