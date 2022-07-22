@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
  */
 class SchoolController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('check_role')->except('index','show');
+        // $this->middleware('subscribed')->except('store');
+    }
     /**
      * Display a listing of the resource.
      *
