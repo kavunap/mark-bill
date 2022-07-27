@@ -86,6 +86,9 @@
                                 <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Users') }}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
                             </li>
                         @endguest
@@ -133,5 +136,28 @@
     element.value() = 2;
     document.getElementById("h1").innerHTML = "New Student List";
 </script> --}}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+ 
+    <script type="text/javascript">
+      
+        $(document).ready(function (e) {
+         
+           
+           $('#image').change(function(){
+                    
+            let reader = new FileReader();
+         
+            reader.onload = (e) => { 
+        
+              $('#preview-image-before-upload').attr('src', e.target.result); 
+            }
+         
+            reader.readAsDataURL(this.files[0]); 
+           
+           });
+           
+        });
+         
+    </script>
 </body>
 </html>

@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
  */
 class MarkController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+        // $this->middleware('check_role')->only('store');
+        // $this->middleware('subscribed')->except('store');
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -60,8 +60,10 @@
                                 @foreach ($course->tests as $test )
                                     <div class="form-group">
                                         
-                                        <a href="{{ route('tests.show',$test->id) }}"><strong>{{ $test->done_on }}</strong></a> 
-                                        <strong>Test Type:</strong> {{ $test->type }}
+                                        <a href="{{ route('tests.show',$test->id) }}"><strong> {{ $test->done_on }}</strong></a> <br>
+                                        <strong>Test Type:</strong> {{ $test->type }} <br>
+                                        <strong>Test Term:</strong> {{ $test->term }} <br>
+                                        <strong>Test Max marks:</strong> {{ $test->max }} <br>
                                     </div>
                                 @endforeach
                             </div>

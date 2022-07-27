@@ -75,7 +75,7 @@
                                 <p class="musrt">Don't have account? <a href="signup.html" class="theme-cl">SignUp</a></p>
                             </div>
                             <div class="fhg_45">
-                                <p class="musrt"><a href="forgot.html" class="text-danger">Forgot Password?</a></p>
+                                <p class="musrt"><a href="{{ route('password.request') }}" class="text-danger">Forgot Password?</a></p>
                             </div>
                         </div>
                     </div>

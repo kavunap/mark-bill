@@ -16,9 +16,9 @@
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('schools.index') }}"> Back</a>
                         </div>
-                        <div class="float-right">
+                        {{-- <div class="float-right">
                             <a class="btn btn-success" href="{{ route('classrooms.create') }}"> Add classroom</a>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="card-body">
@@ -40,6 +40,11 @@
                                     <strong>User:</strong>
                                     {{ $school->user->name }}
                                 </div>
+                                <div class="form-group">
+                                    <strong>Stamp:</strong>
+                                    <img src="{{ asset('stamps/' . $school->stamp) }}" alt="stamp" height="50px"/>
+                                    {{ $school->user->name }}
+                                </div>
                             </div>
                             <div class="col-sm-4">
                                 <h3>{{ $school->classrooms->count() }} <strong>Classses</strong><br></h3> 
@@ -56,10 +61,10 @@
                                 <h3>Add Class</h3>
                                 <form action="{{ route('classrooms.store') }}" method="POST">
                                     @csrf
-                                    <input type="text" name="name" id="name" placeholder="Class Name" required>
+                                    {{-- <input type="text" name="name" id="name" placeholder="Class Name" required> --}}
+                                    @include('classroom.form')
 
-                                    <input type="hidden" name="school_id" value="{{ $school->id }}">
-                                    <input type="submit">
+                                    {{-- <input type="submit"> --}}
                                 </form>
                             </div>
                         </div>

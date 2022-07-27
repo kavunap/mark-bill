@@ -36,7 +36,7 @@ class Classroom extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','school_id'];
+    protected $fillable = ['name','school_id','tutor_id'];
 
 
     /**
@@ -63,5 +63,14 @@ class Classroom extends Model
         return $this->hasMany('App\Models\Student', 'classroom_id', 'id');
     }
     
+    /**
+     * Get the tutor that owns the Classroom
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tutor()
+    {
+        return $this->belongsTo(User::class, 'tutor_id', 'id');
+    }
 
 }

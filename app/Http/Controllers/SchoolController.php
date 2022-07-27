@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use Illuminate\Http\Request;
+use App\Models\Classroom;
+use App\Models\User;
+use Auth;
 
 /**
  * Class SchoolController
@@ -13,7 +16,7 @@ class SchoolController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
         $this->middleware('check_role')->except('index','show');
         // $this->middleware('subscribed')->except('store');
     }
@@ -51,7 +54,15 @@ class SchoolController extends Controller
     {
         request()->validate(School::$rules);
 
-        $school = School::create($request->all());
+        $data=$request->all();
+        if($request->file('stamp')){
+            $file= $request->file('stamp');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('/stamps'), $filename);
+            $data['stamp']= $filename;
+        }
+
+        $school = School::create($data);
 
         return redirect()->route('schools.index')
             ->with('success', 'School created successfully.');
@@ -67,8 +78,11 @@ class SchoolController extends Controller
     {
         $school = School::find($id);
         $classrooms = $school->classrooms;
+        $classroom= new Classroom();
+        $school_id=$school->id;
+        $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
 
-        return view('school.show', compact('school','classrooms'));
+        return view('school.show', compact('school','classrooms','classroom','school_id','teachers'));
     }
 
     /**
@@ -94,8 +108,14 @@ class SchoolController extends Controller
     public function update(Request $request, School $school)
     {
         request()->validate(School::$rules);
-
-        $school->update($request->all());
+        $data=$request->all();
+        if($request->file('stamp')){
+            $file= $request->file('stamp');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('/stamps'), $filename);
+            $data['stamp']= $filename;
+        }
+        $school->update($data);
 
         return redirect()->route('schools.index')
             ->with('success', 'School updated successfully');

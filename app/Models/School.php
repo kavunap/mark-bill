@@ -28,6 +28,7 @@ class School extends Model
 		'location' => 'required',
 		'type' => 'required',
 		'user_id' => 'required',
+        'stamp' => 'image|mimes:jpeg,png,jpg|max:2024',
     ];
 
     protected $perPage = 20;
@@ -37,7 +38,7 @@ class School extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','location','type','user_id'];
+    protected $fillable = ['name','location','type','user_id','email','phone','stamp','director'];
 
 
     /**

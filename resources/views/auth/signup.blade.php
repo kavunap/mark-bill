@@ -10,7 +10,7 @@
                     @csrf
                     <div class="crs_log_wrap">
                         <div class="crs_log__thumb">
-                            <img src="https://via.placeholder.com/1920x1200" class="img-fluid" alt="" />
+                            <img src="{{asset('assets/img/user.jpg')}}" class="img-fluid" alt="new user" />
                         </div>
                         <div class="crs_log__caption">
                             <div class="rcs_log_123">
@@ -18,7 +18,16 @@
                             </div>
                             
                             <div class="rcs_log_124">
-                                <div class="Lpo09"><h4>Login Your Account</h4></div>
+                                <div class="Lpo09"><h4>Create Your New Account</h4></div>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label>Full Name</label>
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -69,6 +78,13 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    <ul>
+                                        <li> <strong>Password rules</strong> </li>
+                                        <li>The password must be at least 8 characters.</li>
+                                        <li>The password must contain at least one letter.</li>
+                                        <li>The password must contain at least one number.</li>
+                                        <li>The password must contain at least one symbol.</li>
+                                    </ul>
                                 </div>
                                 <div class="form-group">
                                     <label>Password Confirmation</label>

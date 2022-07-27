@@ -18,7 +18,7 @@ class ClassroomController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
         $this->middleware('check_role')->except('index','show');
         // $this->middleware('subscribed')->except('store');
     }
@@ -138,15 +138,18 @@ class ClassroomController extends Controller
             ->with('success', 'Classroom deleted successfully');
     }
 
-    public function genMission($id){
+    public function genReport($id){
         $classroom = Classroom::find($id);
         return view('classroom.report',compact('classroom'));
       }
       
     public function createPDF($id) {
     $classroom = Classroom::find($id);
+    $school=$classroom->school;
 
-    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'setIsRemoteEnabled'=>true])->loadView('classroom.report',compact('classroom'));   
-    return $pdf->download('murunda.pdf');
+    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school'));   
+    return $pdf->download("class$classroom->id.pdf");
     }
+
+    
 }

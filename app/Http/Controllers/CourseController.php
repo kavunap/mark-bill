@@ -16,7 +16,7 @@ class CourseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
         $this->middleware('check_role')->only('store');
         // $this->middleware('subscribed')->except('store');
     }

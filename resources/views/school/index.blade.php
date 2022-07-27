@@ -47,8 +47,11 @@
                                         
 										<th>Name</th>
 										<th>Location</th>
+                                        <th>Email</th>
+                                        <th>Phone number</th>
+                                        <th>Head master</th>
 										<th>Type</th>
-										<th>User Id</th>
+										<th>User</th>
 
                                         <th></th>
                                     </tr>
@@ -60,8 +63,11 @@
                                             
 											<td>{{ $school->name }}</td>
 											<td>{{ $school->location }}</td>
+                                            <td>{{ $school->email }}</td>
+                                            <td>{{ $school->phone }}</td>
+                                            <td>{{ $school->director }}</td>
 											<td>{{ $school->type }}</td>
-											<td>{{ $school->user_id }}</td>
+											<td>{{ $school->user->name }}</td>
 
                                             <td>
                                                 <form action="{{ route('schools.destroy',$school->id) }}" method="POST">

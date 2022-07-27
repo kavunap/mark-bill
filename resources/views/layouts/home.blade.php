@@ -34,7 +34,7 @@
 								<ul>
 									<li>
 										<a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="crs_yuo12 w-auto text-white theme-bg">
-											<span class="embos_45"><i class="fas fa-sign-in-alt mr-1"></i>Sign Inv</span>
+											<span class="embos_45"><i class="fas fa-sign-in-alt mr-1"></i>Sign In</span>
 										</a>
 									</li>
 								</ul>
@@ -117,6 +117,9 @@
 									<li><a href="#">Account<span class="submenu-indicator"></span></a>
 										<ul class="nav-dropdown nav-submenu">
 											<a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+										</ul>
+										<ul class="nav-dropdown nav-submenu">
+											<a class="nav-link" href="{{ route('users.edit',Auth::user()->id) }}">Profile</a>
 										</ul>
 									</li>
 								@endif

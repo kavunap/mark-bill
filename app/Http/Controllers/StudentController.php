@@ -13,7 +13,7 @@ class StudentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','verified']);
         $this->middleware('check_role')->only('store','update','edit');
         // $this->middleware('subscribed')->except('store');
     }
@@ -113,5 +113,10 @@ class StudentController extends Controller
 
         return redirect()->route('students.index')
             ->with('success', 'Student deleted successfully');
+    }
+
+    public function list(){
+        $students=Student::paginate();
+        return view('student.list2', compact('students'));
     }
 }

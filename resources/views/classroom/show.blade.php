@@ -27,7 +27,7 @@
                             <a class="btn btn-primary" href="{{ route('classrooms.index') }}"> Back</a>
                         </div>
                         <div class="float-right">
-                        <a class="btn btn-sm btn-primary " href="{{ route('generate',$classroom->id) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports</a>
+                        <a class="btn btn-sm btn-primary " href="{{ route('download',$classroom->id) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports</a>
                         </div>
                     </div>
                     
@@ -55,6 +55,12 @@
                                     <a href="{{ route('schools.show',$classroom->school->id) }}">
                                         <strong>School:</strong>
                                         {{ $classroom->school->name }}
+                                    </a>
+                                </div>
+                                <div class="form-group">
+                                    <a href="{{ route('users.show',$classroom->tutor->id) }}">
+                                        <strong>Class Tutor:</strong>
+                                        {{ $classroom->tutor->name }}
                                     </a>
                                 </div>
                             </div>

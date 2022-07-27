@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <section class="content container-fluid">
         <div class="">
             <div class="col-md-12">
@@ -28,4 +29,5 @@
             </div>
         </div>
     </section>
+    
 @endsection
