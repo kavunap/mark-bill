@@ -14,7 +14,7 @@
                             <span class="card-title">Show Test</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('classrooms.show',$test->course->classroom->id) }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('courses.show',$test->course->id) }}"> Back</a>
                         </div>
                     </div>
 
@@ -91,8 +91,7 @@
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Name</th>
-                <th scope="col" >Number</th>
-                <th scope="col" >Marks recorded</th>
+                <th scope="col" >Marks</th>
                 <th scope="col" >Actions</th>
             </tr>
         </thead>
@@ -101,8 +100,7 @@
                 <tr>
                     <td scope="row">{{ $student->id }}</td>
                     <td>{{ $student->name }}</td>
-                    <td>{{ $student->st_code }}</td>
-                    <td>{{ $student->marks->count() }}</td>
+                    <td>@if($test->marks->where('student_id',$student->id)->first()!=null) {{ $test->marks->where('student_id',$student->id)->first()->marks }}@endif</td>
                     <td class="form-inline">
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST">
 

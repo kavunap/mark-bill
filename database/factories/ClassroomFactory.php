@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\School;
+use App\Models\Archive;
 
 class ClassroomFactory extends Factory
 {
@@ -16,7 +16,7 @@ class ClassroomFactory extends Factory
     {
         return [
             "name" => $this->faker->name(),
-            "school_id" => School::find(1)->id,
+            "archive_id" => Archive::find(1)->id,
         ];
     }
 }

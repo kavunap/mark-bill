@@ -26,7 +26,6 @@ class Student extends Model
     static $rules = [
 		'name' => 'required',
 		'parent_phone' => 'required',
-		'st_code' => 'required',
 		'classroom_id' => 'required',
     ];
 
@@ -37,7 +36,7 @@ class Student extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','parent_phone','st_code','classroom_id'];
+    protected $fillable = ['name','parent_phone','classroom_id'];
 
 
     /**

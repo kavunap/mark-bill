@@ -61,7 +61,7 @@
 		<th colspan="16">
 		<div style="text-align:left">
 		<p style="font-size:13px;">REPUBLIC OF RWANDA<br>MINISTRY OF EDUCATION<BR>
-		{{ $classroom->school->location }}<BR>{{ $classroom->school->name }}<BR>TEL: {{$classroom->school->phone}}<BR>E-MAIL: {{$classroom->school->email}}
+		{{ $classroom->archive->school->location }}<BR>{{ $classroom->archive->school->name }}<BR>TEL: {{$classroom->archive->school->phone}}<BR>E-MAIL: {{$classroom->archive->school->email}}
 		<H1 style="text-align:center">STUDENT REPORT FORM</H1></p>
 		</div> 
 		</th>
@@ -121,7 +121,7 @@
 				
 				<tr>
 					<td width=25%>{{ $course->title }}</td><td>{{ $course->max }}</td><td>{{ $course->max }}</td><td>{{ $course->max *2 }}</td>
-					@foreach ($student->marks as $mark)
+					{{-- @foreach ($student->marks as $mark)
 						@if ($mark->test->term=='Term 1' && $mark->test->type=="Test" && $mark->test->course_id==$course->id)
 							<td>{{ $test_term1 = $mark->marks }}</td>
 						@else
@@ -163,7 +163,195 @@
 						<!-- End of term3 -->
 						<!-- Course annual total -->
 						<td>{{$course_max_annual =$course->tests->sum('max')}} </td><td>{{$course_total_annual=$totoal_term1+$totoal_term2+$totoal_term3}} </td><td>@if($course_max_annual!=0) {{ $course_annual_perc = ($course_total_annual/$course_max_annual) *100}} @else - @endif</td>
+					@endforeach --}}
+					@php
+						$test1 =null;
+						$ex1=null;
+					@endphp
+					@if ($student->marks->count() !=0)
+						@foreach ($student->marks as $mark)
+							@php
+								$blank=true;
+							@endphp
+							@if($mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test1=$mark->marks}} @php $blank=false @endphp @break </td>  @endif
+						@endforeach
+						@if ($blank==true) <td>-</td> @endif
+					@else
+						<td>-</td>
+					@endif
+
+					
+					@if ($student->marks->count() !=0)
+						@foreach ($student->marks as $mark)
+							@php
+								$blank=true;
+							@endphp
+							@if($mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Exam" && $mark->test->course_id==$course->id)<td>{{$ex1=$mark->marks}} @php $blank=false @endphp @break </td>  @endif
+						@endforeach
+						@if ($blank==true) <td>-</td> @endif
+					@else
+						<td>-</td>
+					@endif
+
+					<td> 
+						@if ($test1 ==null && $ex1 ==null)
+							@php
+								$total1=null
+							@endphp -
+						@elseif ($test1 == null && $ex1 !=null)
+							{{$total1=$ex1}}
+						@elseif ($test1!=null && $ex1==null)
+							{{$total1=$test1}}
+						@else
+							{{$total1=$test1+$ex1}}
+						@endif
+					</td>
+
+					@if ($term==2)
+						
+						@php
+							$test2 =null;
+							$ex2=null;
+						@endphp
+						@if ($student->marks->count() !=0)
+							@foreach ($student->marks as $mark)
+								@php
+									$blank=true;
+								@endphp
+								@if($mark->student_id==$student->id && $mark->test->term=="Term 2" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test2=$mark->marks}} @php $blank=false @endphp @break </td>  @endif
+							@endforeach
+							@if ($blank==true) <td>-</td> @endif
+						@else
+							<td>-</td>
+						@endif
+
+						@if ($student->marks->count() !=0)
+							@foreach ($student->marks as $mark)
+								@php
+									$blank=true;
+								@endphp
+								@if($mark->student_id==$student->id && $mark->test->term=="Term 2" && $mark->test->type=="Exam" && $mark->test->course_id==$course->id)<td>{{$ex2=$mark->marks}} @php $blank=false @endphp @break </td>  @endif
+							@endforeach
+							@if ($blank==true) <td>-</td> @endif
+						@else
+							<td>-</td>
+						@endif
+
+						<td> 
+							@if ($test2 ==null && $ex2 ==null)
+								@php
+									$total2=null
+								@endphp -
+							@elseif ($test2 == null && $ex2 !=null)
+								{{$total2=$ex2}}
+							@elseif ($test2!=null && $ex2==null)
+								{{$total2=$test2}}
+							@else
+								{{$total2=$test2+$ex2}}
+							@endif
+						</td>
+					@else
+					<td></td> <td></td> <td></td> @php
+						$total2=null
+					@endphp
+					@endif
+
+					<!-- Term 3 starts -->
+					@if ($term==3)
+						
+						@php
+							$test3 =null;
+							$ex3=null;
+						@endphp
+						@if ($student->marks->count() !=0)
+							@foreach ($student->marks as $mark)
+								@php
+									$blank=true;
+								@endphp
+								@if($mark->student_id==$student->id && $mark->test->term=="Term 3" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test3=$mark->marks}} @php $blank=false @endphp @break </td>  @endif
+							@endforeach
+							@if ($blank==true) <td>-</td> @endif
+						@else
+							<td>-</td>
+						@endif
+
+						@if ($student->marks->count() !=0)
+							@foreach ($student->marks as $mark)
+								@php
+									$blank=true;
+								@endphp
+								@if($mark->student_id==$student->id && $mark->test->term=="Term 3" && $mark->test->type=="Exam" && $mark->test->course_id==$course->id)<td>{{$ex3=$mark->marks}} @php $blank=false @endphp @break </td>  @endif
+							@endforeach
+							@if ($blank==true) <td>-</td> @endif
+						@else
+							<td>-</td>
+						@endif
+
+						<td> 
+							@if ($test3 ==null && $ex3 ==null)
+								@php
+									$total3=null
+								@endphp -
+							@elseif ($test3 == null && $ex3 !=null)
+								{{$total3=$ex3}}
+							@elseif ($test3!=null && $ex3==null)
+								{{$total3=$test3}}
+							@else
+								{{$total3=$test3+$ex3}}
+							@endif
+						</td>
+					@else
+					<td></td> <td></td> <td></td>@php
+						$total3=null
+					@endphp
+					@endif
+
+					<!-- Annual starts -->
+					<td>{{$course_annual=$course->max * 3}}</td> <td>{{ $annual_mark=$total1+ $total2 + $total3}} </td> <td>@if($course_annual!=0) {{$annual_mark/$course_annual*100}} @else 0 @endif</td>
+					{{-- @foreach ($student->marks as $mark)
+						@if($mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test1=$mark->marks}}</td>@endif
+						@php
+							if($check=$mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Exam")
+							{
+								if($mark->test->course_id==$course->id){
+									$ex1=$mark->marks;
+								}
+								else {
+									$ex1="-";
+								}
+								echo"<td>{$ex1}</td>";
+								break;
+							}
+						@endphp
+					@endforeach --}}
+					{{-- <td></td> --}}
+					
+					{{-- @foreach ($student->marks as $mark)
+						@if($mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Exam" && $mark->test->course_id==$course->id)<td>{{$exam1=$mark->marks}}</td>@endif
+					@endforeach --}}
+
+					{{-- <td>{{$test1+$exam1}}</td> --}}
+					
+					{{-- @foreach ($student->marks as $mark)
+						@if($mark->student_id==$student->id && $mark->test->term=="Term 2" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test2=$mark->marks}}</td>@endif
 					@endforeach
+
+					@foreach ($student->marks as $mark)
+						@if($mark->student_id==$student->id && $mark->test->term=="Term 2" && $mark->test->type=="Exam" && $mark->test->course_id==$course->id)<td>{{$exam2=$mark->marks}}</td>@endif
+					@endforeach
+					<td>-</td>
+
+					@foreach ($student->marks as $mark)
+						@if($mark->student_id==$student->id && $mark->test->term=="Term 3" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test3=$mark->marks}}</td>@endif
+					@endforeach
+
+					@foreach ($student->marks as $mark)
+						@if($mark->student_id==$student->id && $mark->test->term=="Term 3" && $mark->test->type=="Exam" && $mark->test->course_id==$course->id)<td>{{$exam3=$mark->marks}}</td>@endif
+					@endforeach
+					<td>-</td> --}}
+					{{-- <td>{{$student->marks->join('tests', 'marks.test_id', '=', 'tests.id')
+						->join('courses', 'tests.course_id', '=', 'courses.id')
+						->where('tests.term','Term 1')->where('test.type','Quiz')->first()->marks}}</td> --}}
 					
 				</tr>
 				{{-- @foreach ($course->tests as $test)
@@ -186,10 +374,10 @@
 			<tr style="height:20%">
 			<td colspan="4">Teacher's signature</td>
 			
-			<td colspan="3"> <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50"></td> 
-			<td colspan="3"><img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50"></td>
-			<td colspan="3"><img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50"></td>
-			<td colspan="3"><img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50"></td>
+			<td colspan="3"> @if($classroom->tutor && $classroom->tutor->signature !=Null) <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50"> @endif</td> 
+			<td colspan="3">@if($classroom->tutor && $classroom->tutor->signature !=Null)<img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50">@endif</td>
+			<td colspan="3">@if($classroom->tutor && $classroom->tutor->signature !=Null)<img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50">@endif</td>
+			<td colspan="3">@if($classroom->tutor && $classroom->tutor->signature !=Null)<img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->tutor->signature))) }}" alt="marks bill" height="20" width="50">@endif</td>
 			</tr>
 			<tr>
 			<td colspan="4">Parent's signature</td>
@@ -210,15 +398,15 @@
 						3.  Discontinued
 
 						</td>
-						<td style=""> Done at {{ $classroom->school->location }} {{date('d-m-Y')}}<br>
+						<td style=""> Done at {{ $classroom->archive->school->location }} {{date('d-m-Y')}}<br>
 						Headmaster  <br>
 						(stamp and signature)<br>
 						{{-- <img src="{{ asset('stamps/' . $classroom->school->stamp) }}" alt="stamp" height="50px"/> --}}
 						{{-- <img src="{{ asset('stamps/202207242157profile2.jpg') }}" alt="stamp" height="50px"/> --}}
-						<img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->school->user->signature))) }}" alt="mark bill" height="100">
-						<img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('stamps/'.$classroom->school->stamp))) }}" alt="mark bill" height="100">
+						@if($classroom->archive->school->user->signature !=null) <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('signatures/'.$classroom->archive->school->user->signature))) }}" alt="mark bill" height="100"> @endif
+						@if($classroom->archive->school->stamp !=null) <img src="data:image/jpg;base64,{{ base64_encode(file_get_contents(public_path('stamps/'.$classroom->archive->school->stamp))) }}" alt="mark bill" height="100">@endif
 						{{-- {{$classroom->school->stamp}} --}}
-						{{$classroom->school->director}}
+						{{$classroom->archive->school->director}}
 						</td>
 						</tr>
 					</table>

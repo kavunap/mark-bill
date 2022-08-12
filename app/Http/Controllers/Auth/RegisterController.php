@@ -54,7 +54,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed',Password::min(8)->letters()->numbers()->symbols()->uncompromised()],
+            'password' => ['required', 'string', 'min:8', 'confirmed',Password::min(8)->letters()->numbers()->symbols()],
         ]);
     }
 
@@ -70,12 +70,15 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'admin_id'=>$data['admin_id'],
         ]);
         // event(new Registered($user));
     }
 
     public function showRegistrationForm()
     {
-        return view('auth.signup');
+        // $admins=User::all()->where('user_role','admin')->pluck('name', 'id');
+        $admins= User::all()->where('user_role','=',"admin")->pluck('name', 'id');
+        return view('auth.signup',compact('admins'));
     }
 }

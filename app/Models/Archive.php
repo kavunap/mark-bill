@@ -5,30 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class School
+ * Class Archive
  *
  * @property $id
- * @property $name
- * @property $location
- * @property $type
- * @property $user_id
+ * @property $year
+ * @property $academic_year
+ * @property $school_id
  * @property $created_at
  * @property $updated_at
  *
  * @property Classroom[] $classrooms
- * @property User $user
+ * @property School $school
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class School extends Model
+class Archive extends Model
 {
     
     static $rules = [
-		'name' => 'required',
-		'location' => 'required',
-		'type' => 'required',
-		'user_id' => 'required',
-        'stamp' => 'image|mimes:jpeg,png,jpg|max:2024',
+		'year' => 'required',
+		'academic_year' => 'required',
+		'school_id' => 'required',
     ];
 
     protected $perPage = 20;
@@ -38,23 +35,23 @@ class School extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','location','type','user_id','email','phone','stamp','director'];
+    protected $fillable = ['year','academic_year','school_id'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function archives()
+    public function classrooms()
     {
-        return $this->hasMany('App\Models\Archive');
+        return $this->hasMany('App\Models\Classroom', 'archive_id', 'id');
     }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function user()
+    public function school()
     {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
+        return $this->hasOne('App\Models\School', 'id', 'school_id');
     }
     
 

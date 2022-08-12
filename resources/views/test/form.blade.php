@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             {{ Form::label('Test Type') }}
-            {{ Form::select('type', array('Exam' => 'Exam', 'Test' => 'Test', 'ReTest' => 'Re-test'),['class'=>'form-control']) }}
+            {{ Form::select('type', array('Exam' => 'Exam', 'Quiz' => 'Quiz'),['class'=>'form-control']) }}
             {!! $errors->first('type', '<div class="invalid-feedback">:message</p>') !!}
         </div>
 

@@ -18,8 +18,8 @@
                 {!! $errors->first('status', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group">
-                {{ Form::label('user_role') }}
-                {{ Form::text('user_role', $user->user_role, ['class' => 'form-control' . ($errors->has('user_role') ? ' is-invalid' : ''), 'placeholder' => 'User Role']) }}
+                {{ Form::label('user_role') }} <br>
+                {{ Form::select('user_role' , array('super_admin' => 'Super Admin', 'admin' => 'Admin','teacher' => 'Teacher'),$user->user_role, ['width'=>'100%','placeholder' => 'User Role','height'=>'100px']) }}
                 {!! $errors->first('user_role', '<div class="invalid-feedback">:message</div>') !!}
             </div>
         @endif
@@ -78,6 +78,6 @@
 
     </div>
     <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     </div>
 </div>

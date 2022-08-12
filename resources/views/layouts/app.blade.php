@@ -76,7 +76,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('schools.index') }}">{{ __('Schools') }}</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
                             </li>
                             <li class="nav-item">
@@ -84,10 +84,13 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Users') }}</a>
-                            </li>
+                            </li> --}}
+                            @if (Auth::user()->user_role=="super_admin")
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Users') }}</a>
+                                </li>
+                            @endif
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
                             </li>

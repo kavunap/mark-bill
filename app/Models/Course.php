@@ -27,9 +27,9 @@ class Course extends Model
     
     static $rules = [
 		'title' => 'required',
-		'description' => 'required',
-		'credits' => 'required',
-		'hours' => 'required',
+		// 'description' => 'required',
+		// 'credits' => 'required',
+		// 'hours' => 'required',
 		// 'classroom_id' => 'required',
         'user_id'=>'required',
         'max'=>'required'
@@ -42,7 +42,7 @@ class Course extends Model
      *
      * @var array
      */
-    protected $fillable = ['title','description','credits','hours','classroom_id','user_id','max'];
+    protected $fillable = ['title','classroom_id','user_id','max'];
 
 
     /**

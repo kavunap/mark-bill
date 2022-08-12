@@ -18,7 +18,7 @@ class ClassroomController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth']);
         $this->middleware('check_role')->except('index','show');
         // $this->middleware('subscribed')->except('store');
     }
@@ -59,7 +59,7 @@ class ClassroomController extends Controller
 
         $classroom = Classroom::create($request->all());
 
-        return redirect()->route('schools.show',$classroom->school->id)
+        return redirect()->route('archives.show',$classroom->archive->id)
             ->with('success', 'Classroom created successfully.');
     }
 
@@ -84,8 +84,9 @@ class ClassroomController extends Controller
         
         // $students = $classroom->students;
         $new_student = new Student();
-        $students = Student::where('classroom_id',$classroom->id)->paginate();
-        $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
+        $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
+        // $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
+        $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
         $course = new Course();
         $student = new Student();
 
@@ -138,16 +139,16 @@ class ClassroomController extends Controller
             ->with('success', 'Classroom deleted successfully');
     }
 
-    public function genReport($id){
+    public function genReport($id,$term){
         $classroom = Classroom::find($id);
         return view('classroom.report',compact('classroom'));
       }
       
-    public function createPDF($id) {
+    public function createPDF($id,$term) {
     $classroom = Classroom::find($id);
     $school=$classroom->school;
-
-    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school'));   
+        
+    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school','term'));   
     return $pdf->download("class$classroom->id.pdf");
     }
 

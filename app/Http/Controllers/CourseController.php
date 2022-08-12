@@ -16,8 +16,8 @@ class CourseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
-        $this->middleware('check_role')->only('store');
+        $this->middleware(['auth']);
+        $this->middleware('check_role')->except('index','show');
         // $this->middleware('subscribed')->except('store');
     }
     /**
@@ -27,7 +27,17 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate();
+        if (Auth::user()->user_role=="admin" && Auth::user()->school!=null) {
+            
+            // $courses = Course::where('classroom_id',Auth::user()->school->archives->pluck('id')->classrooms->pluck('id'))->paginate();
+            $courses = Course::where('user_id',Auth::user()->id)->paginate();
+        }
+        elseif(Auth::user()->user_role=="super_admin"){
+            $courses = Course::paginate();
+        } else {
+            $courses = Course::where('user_id',Auth::user()->id)->paginate();
+        }
+        
 
         return view('course.index', compact('courses'))
             ->with('i', (request()->input('page', 1) - 1) * $courses->perPage());
@@ -103,7 +113,7 @@ class CourseController extends Controller
         $input=$request->all();
         $input['classroom_id']=$course->classroom_id;
         if ($course->update($input)) {
-            return redirect()->route('courses.index')
+            return redirect()->route('classrooms.show',$course->classroom_id)
                 ->with('success', 'Course updated successfully');
         }
         else{
@@ -120,9 +130,11 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        $course = Course::find($id)->delete();
+        $course = Course::find($id);
+        $class_id= $course->classroom_id;
+        $course->delete();
 
-        return redirect()->route('courses.index')
+        return redirect()->route('classrooms.show',$class_id)
             ->with('success', 'Course deleted successfully');
     }
 }

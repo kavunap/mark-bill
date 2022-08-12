@@ -69,6 +69,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label>Head teacher of your school</label>
+                                        <select class="form-control" name="admin_id" id="admin_id">
+                                            <option value="">Select Head Teacher</option>
+                                            @foreach ($admins as $key => $value)
+                                                {{-- <option value="{{$admin->id}}">{{$admin->name}}</option> --}}
+                                                {{-- <option value="">Sel</option> --}}
+                                                <option value="{{ $key }}">{{ $value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">

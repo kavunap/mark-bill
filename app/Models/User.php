@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -22,7 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'profile',
-        'signature'
+        'signature',
+        'admin_id',
     ];
 
     /**
@@ -48,7 +49,17 @@ class User extends Authenticatable implements MustVerifyEmail
 		'name' => 'required',
 		'email' => 'required',
 		'profile' => 'image|mimes:jpeg,png,jpg|max:2024',
-		'signature' => 'required|image|mimes:jpeg,png,jpg|max:2024',
+		'signature' => 'image|mimes:jpeg,png,jpg|max:2024',
     ];
+
+    /**
+     * Get the school associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function school()
+    {
+        return $this->hasOne(School::class);
+    }
     
 }

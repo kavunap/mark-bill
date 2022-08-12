@@ -7,11 +7,11 @@
             {!! $errors->first('name', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('tutor') }}
+            {{ Form::label('class_teacher') }} <br>
             {{ Form::select('tutor_id', $teachers, ['class' => 'form-control' . ($errors->has('tutor_id') ? ' is-invalid' : ''), 'placeholder' => 'Classroom tutor']) }}
             {!! $errors->first('tutor_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-        <input type="hidden" name="school_id" value="{{ $school_id }}">
+        <input type="hidden" name="archive_id" value="{{ $archive_id }}">
 
     </div>
     <div class="box-footer mt20">

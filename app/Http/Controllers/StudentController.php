@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 
 /**
@@ -13,7 +14,8 @@ class StudentController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+
+        $this->middleware(['auth']);
         $this->middleware('check_role')->only('store','update','edit');
         // $this->middleware('subscribed')->except('store');
     }
@@ -80,9 +82,11 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = Student::find($id);
+        $new_student = Student::find($id);
+        // $new_student = new Student();
+        $classrooms=Classroom::all()->where('archive_id',$new_student->classroom->archive_id)->pluck('name', 'id');
 
-        return view('student.edit', compact('student'));
+        return view('student.edit', compact('new_student','classrooms'));
     }
 
     /**
@@ -95,10 +99,10 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         request()->validate(Student::$rules);
-
+        // $request->classroom_id=$student->classroom_id;
         $student->update($request->all());
 
-        return redirect()->route('students.index')
+        return redirect()->route('classrooms.show',$student->classroom_id)
             ->with('success', 'Student updated successfully');
     }
 
@@ -111,12 +115,16 @@ class StudentController extends Controller
     {
         $student = Student::find($id)->delete();
 
-        return redirect()->route('students.index')
+        return redirect()->route('classrooms.show',$student->classroom_id)
             ->with('success', 'Student deleted successfully');
     }
 
     public function list(){
         $students=Student::paginate();
         return view('student.list2', compact('students'));
+    }
+
+    public function excel_list($classroom){
+        return \Excel::download(new \App\Exports\StuddentsFromView($classroom), 'students.xlsx', 'Html');
     }
 }

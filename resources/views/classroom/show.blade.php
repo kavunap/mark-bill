@@ -24,11 +24,17 @@
                             <span class="card-title">Show Classroom</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('classrooms.index') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ url()->previous() }}"> Back</a>
                         </div>
                         <div class="float-right">
-                        <a class="btn btn-sm btn-primary " href="{{ route('download',$classroom->id) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports</a>
+                            <a class="btn btn-sm btn-primary " href="{{ route('download',['id'=>$classroom->id, 'term'=>1]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports1</a>
+                            </div>
+                        <div class="float-right">
+                        <a class="btn btn-sm btn-primary " href="{{ route('download',['id'=>$classroom->id, 'term'=>2]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports2</a>
                         </div>
+                        <div class="float-right">
+                            <a class="btn btn-sm btn-primary " href="{{ route('download',['id'=>$classroom->id, 'term'=>3]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports3</a>
+                            </div>
                     </div>
                     
                     <div class="card-body">
@@ -52,17 +58,20 @@
                                     {{ $classroom->name }}
                                 </div>
                                 <div class="form-group">
-                                    <a href="{{ route('schools.show',$classroom->school->id) }}">
-                                        <strong>School:</strong>
-                                        {{ $classroom->school->name }}
+                                    <a href="{{ route('archives.show',$classroom->archive->id) }}">
+                                        <strong>Year:</strong>
+                                        {{ $classroom->archive->year }}
                                     </a>
                                 </div>
-                                <div class="form-group">
-                                    <a href="{{ route('users.show',$classroom->tutor->id) }}">
-                                        <strong>Class Tutor:</strong>
-                                        {{ $classroom->tutor->name }}
-                                    </a>
-                                </div>
+                                @if ($classroom->tutor)
+                                    <div class="form-group">
+                                        <a href="{{ route('users.show',$classroom->tutor->id) }}">
+                                            <strong>Class Tutor:</strong>
+                                            {{ $classroom->tutor->name }}
+                                        </a>
+                                    </div>
+                                @endif
+                                
                             </div>
                             <div class="col-sm-4">
                                 <h3><strong>Add</strong> Course</h3>
@@ -82,6 +91,9 @@
 
                                         <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
                                         {{-- <input type="submit"> --}}
+                                        <div class="box-footer mt20">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
                                     </form>
                             </div>
                         </div>
@@ -92,6 +104,10 @@
                             
                             <div class="col-sm-8">
                                 <h3><strong>{{ $classroom->students->count() }}</strong> Students</h3>
+                                <a href="{{route('student.excel',$classroom->id)}}" class="btn btn-info">Download List</a><br>
+                                <div class="float-right">
+                                    
+                                </div>
                                 {{-- @foreach ($students as $student )
                                     <div class="form-group">
                                         
@@ -106,7 +122,12 @@
                                 @foreach ($courses as $course )
                                     <div class="form-group">
                                         <a href="{{ route('courses.show',$course->id) }}"><strong>{{ $course->title }}</strong></a> 
-                                        <strong>Credits:</strong> {{ $course->credits }}
+                                        <strong>Max:</strong> {{ $course->max }} 
+                                        <form action="{{ route('courses.destroy',$course->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                        </form>
                                     </div>
                                 @endforeach
                             </div>

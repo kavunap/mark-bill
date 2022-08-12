@@ -47,22 +47,22 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <h3>{{ $school->classrooms->count() }} <strong>Classses</strong><br></h3> 
-                                @foreach ($classrooms as $class )
+                                <h3>{{ $school->archives->count() }} <strong>Academic Year</strong><br></h3> 
+                                @foreach ($archives as $archive )
                                     <div class="form-group">
                                         
-                                        <a href="{{ route('classrooms.show',$class->id) }}"><strong>{{ $class->name }}</strong></a> 
-                                        <strong>Students:</strong> {{ $class->students->count() }}
-                                        <strong>Courses:</strong>  {{ $class->courses->count() }}
+                                        <a href="{{ route('archives.show',$archive->id) }}"><strong>{{ $archive->year }}</strong></a> 
+                                        <strong>Classrooms:</strong> {{ $archive->classrooms->count() }}
+                                        {{-- <strong>Courses:</strong>  {{ $class->courses->count() }} --}}
                                     </div>
                                 @endforeach
                             </div>
                             <div class="col-sm-4">
-                                <h3>Add Class</h3>
-                                <form action="{{ route('classrooms.store') }}" method="POST">
+                                <h3>Add New Academic Year</h3>
+                                <form action="{{ route('archives.store') }}" method="POST">
                                     @csrf
                                     {{-- <input type="text" name="name" id="name" placeholder="Class Name" required> --}}
-                                    @include('classroom.form')
+                                    @include('archive.form')
 
                                     {{-- <input type="submit"> --}}
                                 </form>

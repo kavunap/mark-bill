@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Course
+    Archive
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Course') }}
+                                {{ __('Archive') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('courses.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('archives.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -36,31 +36,30 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Title</th>
-										<th>Classroom</th>
+										<th>Year</th>
+										<th>Academic Year</th>
+										<th>School Id</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($courses as $course)
+                                    @foreach ($archives as $archive)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $course->title }}</td>
-											<td>{{ $course->classroom->name }}</td>
+											<td>{{ $archive->year }}</td>
+											<td>{{ $archive->academic_year }}</td>
+											<td>{{ $archive->school_id }}</td>
 
                                             <td>
-                                                <a class="btn btn-sm btn-primary " href="{{ route('courses.show',$course->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                @if(Auth::user()->user_role!="teacher")
-                                                <form action="{{ route('courses.destroy',$course->id) }}" method="POST">
-                                                    
-                                                    <a class="btn btn-sm btn-success" href="{{ route('courses.edit',$course->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                <form action="{{ route('archives.destroy',$archive->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('archives.show',$archive->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('archives.edit',$archive->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                 </form>
-                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -69,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $courses->links() !!}
+                {!! $archives->links() !!}
             </div>
         </div>
     </div>

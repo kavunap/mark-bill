@@ -41,17 +41,37 @@ class Mark extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+    // public function student()
+    // {
+    //     return $this->hasOne('App\Models\Student', 'id', 'student_id');
+    // }
+
+    /**
+     * Get the student that owns the Mark
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function student()
     {
-        return $this->hasOne('App\Models\Student', 'id', 'student_id');
+        return $this->belongsTo(Student::class);
     }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+    // public function test()
+    // {
+    //     return $this->hasOne('App\Models\Test', 'id', 'test_id');
+    // }
+
+    /**
+     * Get the test that owns the Mark
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function test()
     {
-        return $this->hasOne('App\Models\Test', 'id', 'test_id');
+        return $this->belongsTo(Test::class);
     }
     
 

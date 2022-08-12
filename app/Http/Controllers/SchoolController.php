@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use Illuminate\Http\Request;
-use App\Models\Classroom;
+use App\Models\Archive;
 use App\Models\User;
 use Auth;
 
@@ -16,7 +16,7 @@ class SchoolController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['auth']);
         $this->middleware('check_role')->except('index','show');
         // $this->middleware('subscribed')->except('store');
     }
@@ -27,7 +27,13 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        $schools = School::paginate();
+        if (Auth::user()->user_role=="super_admin") {
+            $schools = School::paginate();
+        }
+        else{
+            $schools = School::where('user_id',Auth::user()->id)->paginate();
+        }
+        
 
         return view('school.index', compact('schools'))
             ->with('i', (request()->input('page', 1) - 1) * $schools->perPage());
@@ -77,12 +83,11 @@ class SchoolController extends Controller
     public function show($id)
     {
         $school = School::find($id);
-        $classrooms = $school->classrooms;
-        $classroom= new Classroom();
+        $archives = $school->archives;
+        $new_archive = new Archive();
         $school_id=$school->id;
-        $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
-
-        return view('school.show', compact('school','classrooms','classroom','school_id','teachers'));
+        
+        return view('school.show', compact('school','archives','new_archive','school_id'));
     }
 
     /**

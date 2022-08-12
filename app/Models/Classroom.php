@@ -26,7 +26,7 @@ class Classroom extends Model
     
     static $rules = [
 		'name' => 'required',
-		'school_id' => 'required',
+		'archive_id' => 'required',
     ];
 
     protected $perPage = 20;
@@ -36,7 +36,7 @@ class Classroom extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','school_id','tutor_id'];
+    protected $fillable = ['name','archive_id','tutor_id'];
 
 
     /**
@@ -50,10 +50,10 @@ class Classroom extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function school()
-    {
-        return $this->belongsTo('App\Models\School');
-    }
+    // public function school()
+    // {
+    //     return $this->belongsTo('App\Models\School');
+    // }
     
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -71,6 +71,16 @@ class Classroom extends Model
     public function tutor()
     {
         return $this->belongsTo(User::class, 'tutor_id', 'id');
+    }
+    
+    /**
+     * Get the archive that owns the Classroom
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function archive()
+    {
+        return $this->belongsTo(Archive::class);
     }
 
 }

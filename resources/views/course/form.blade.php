@@ -5,7 +5,7 @@
             {{ Form::text('title', $course->title, ['class' => 'form-control' . ($errors->has('title') ? ' is-invalid' : ''), 'placeholder' => 'Title']) }}
             {!! $errors->first('title', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
             {{ Form::text('description', $course->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'description']) }}
             {!! $errors->first('description', '<div class="invalid-feedback">:message</p>') !!}
         </div>
@@ -16,7 +16,7 @@
         <div class="form-group">
             {{ Form::number('hours', $course->hours, ['class' => 'form-control' . ($errors->has('hours') ? ' is-invalid' : ''), 'placeholder' => 'Hours','min'=>1]) }}
             {!! $errors->first('hours', '<div class="invalid-feedback">:message</p>') !!}
-        </div>
+        </div> --}}
 
         <div class="form-group">
             {{ Form::number('max', $course->max, ['class' => 'form-control' . ($errors->has('max') ? ' is-invalid' : ''), 'placeholder' => 'Maximum marks']) }}
@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-group">
-            {!! Form::select('user_id', $teachers, null, ['class' => 'form-control','placeholder'=>'Select Teacher']) !!} <br>
+            {!! Form::select('user_id', $teachers, null, ['class' => 'form-control','placeholder'=>'Select Teacher', 'required']) !!} <br>
             {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         

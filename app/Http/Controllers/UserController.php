@@ -99,20 +99,35 @@ class UserController extends Controller
             $file= $request->file('profile');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('/profiles'), $filename);
-            $data['profile']= $filename;
+            // $data['profile']= $filename;
+            $user->profile=$filename;
         }
         if($request->file('signature')){
             $file= $request->file('signature');
             $filename= date('YmdHi').$file->getClientOriginalName();
             $file->move(public_path('/signatures'), $filename);
-            $data['signature']= $filename;
+            // $data['signature']= $filename;
+            $user->signature=$filename;
+        }
+        if($request->user_role){
+            $data['user_role ']= $request->user_role;
         }
         // $data->save();
-        
-        $user->update($data);
-
-        return redirect()->route('users.index')
+        $user->user_role=$data['user_role '];
+        $user->user_role=$request->user_role;
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->status=$request->status;
+        if ($user->save()) {
+            return redirect()->route('users.index')
             ->with('success', 'User updated successfully');
+        }
+        else{
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
+
+        
     }
 
     /**
