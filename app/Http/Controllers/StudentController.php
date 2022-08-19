@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Classroom;
+use App\Models\Archive;
 use Illuminate\Http\Request;
+use Auth;
+
 
 /**
  * Class StudentController
@@ -26,7 +29,27 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate();
+        
+        if (Auth::user()->user_role=='admin') {
+            $archive=Archive::where('school_id',Auth::user()->school->id)->latest('created_at')->first();
+            $classrooms=Classroom::where('archive_id',$archive->id);
+            // $students=Auth::user()->school->archives->last()->classrooms->last()->students()->paginate();
+            $students=Student::query()->paginate();
+            foreach ($classrooms as $classroom) {
+                $student=Student::where('classroom_id',$classroom->id)->paginte();
+                $students = $students->concat($student)->paginate();
+            }
+            // if ($students->count() != 0) {
+            //     # code...
+            // }
+            // $students=$students->paginate();
+        }
+        elseif(Auth::user()->user_role=='super_admin'){
+            $students = Student::paginate();
+        }
+        else{
+            $students = Classroom::where('tutor_id',Auth::user()->id)->pluck('id')->students()->paginate();
+        }
 
         return view('student.index', compact('students'))
             ->with('i', (request()->input('page', 1) - 1) * $students->perPage());

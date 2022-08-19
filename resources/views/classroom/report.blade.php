@@ -207,7 +207,7 @@
 						@endif
 					</td>
 
-					@if ($term==2)
+					@if ($term==2 || $term==3)
 						
 						@php
 							$test2 =null;

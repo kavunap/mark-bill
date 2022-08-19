@@ -67,11 +67,17 @@ class SchoolController extends Controller
             $file->move(public_path('/stamps'), $filename);
             $data['stamp']= $filename;
         }
+        $school=Auth::user()->school;
+        if ($school==null) {
+            $school = School::create($data);
 
-        $school = School::create($data);
-
-        return redirect()->route('schools.index')
-            ->with('success', 'School created successfully.');
+            return redirect()->route('schools.index')
+                ->with('success', 'School created successfully.');
+        }
+        else{
+            return redirect()->back()->withErrors("You are not allowed to create more than one schools")->withInput();
+        }
+        
     }
 
     /**

@@ -30,7 +30,16 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        $classrooms = Classroom::paginate();
+        if (Auth::user()->user_role=='admin') {
+            $classrooms=Auth::user()->school->archives->last()->classrooms()->paginate();
+        }
+        elseif(Auth::user()->user_role=='super_admin'){
+            $classrooms=Classroom::paginate();
+        }
+        else{
+            $classrooms = Classroom::where('tutor_id',Auth::user()->id)->paginate();
+        }
+        
 
         return view('classroom.index', compact('classrooms'))
             ->with('i', (request()->input('page', 1) - 1) * $classrooms->perPage());

@@ -30,7 +30,7 @@ class CourseController extends Controller
         if (Auth::user()->user_role=="admin" && Auth::user()->school!=null) {
             
             // $courses = Course::where('classroom_id',Auth::user()->school->archives->pluck('id')->classrooms->pluck('id'))->paginate();
-            $courses = Course::where('user_id',Auth::user()->id)->paginate();
+            $courses = Auth::user()->school->archives->last()->classrooms->last()->courses()->paginate();
         }
         elseif(Auth::user()->user_role=="super_admin"){
             $courses = Course::paginate();

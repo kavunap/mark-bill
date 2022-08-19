@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     static $rules = [
 		'name' => 'required',
-		'email' => 'required',
+		'email' => 'required|unique:users',
 		'profile' => 'image|mimes:jpeg,png,jpg|max:2024',
 		'signature' => 'image|mimes:jpeg,png,jpg|max:2024',
     ];
