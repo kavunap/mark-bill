@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-group">
-            {!! Form::select('user_id', $teachers, null, ['class' => 'form-control','placeholder'=>'Select Teacher', 'required']) !!} <br>
+            {!! Form::select('user_id', $teachers, $course->user_id, ['placeholder'=>'Select Teacher', 'required']) !!} <br>
             {!! $errors->first('user_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         

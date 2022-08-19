@@ -28,7 +28,7 @@
                             <span class="card-title">Show Archive</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ url()->previous() }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('schools.show',$archive->school_id) }}"> Back</a>
                         </div>
                     </div>
 

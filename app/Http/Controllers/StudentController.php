@@ -31,18 +31,22 @@ class StudentController extends Controller
     {
         
         if (Auth::user()->user_role=='admin') {
-            $archive=Archive::where('school_id',Auth::user()->school->id)->latest('created_at')->first();
-            $classrooms=Classroom::where('archive_id',$archive->id);
+            $archive=Archive::where('school_id',Auth::user()->school->id)->orderBy('year','DESC')->first();
+            // $classrooms=Classroom::where('archive_id',$archive->id);
+            $classrooms=$archive->classrooms;
             // $students=Auth::user()->school->archives->last()->classrooms->last()->students()->paginate();
-            $students=Student::query()->paginate();
+            $students=Student::where('id',null)->paginate();
             foreach ($classrooms as $classroom) {
-                $student=Student::where('classroom_id',$classroom->id)->paginte();
-                $students = $students->concat($student)->paginate();
+                $student=Student::where('classroom_id',$classroom->id)->paginate();
+                $students = $students->merge($student);
             }
-            // if ($students->count() != 0) {
-            //     # code...
-            // }
-            // $students=$students->paginate();
+            
+            if($students->count() != 0){
+                $students=$students->toQuery()->paginate();
+            }
+            else{
+                $students=Student::where('id',null)->paginate();
+            }
         }
         elseif(Auth::user()->user_role=='super_admin'){
             $students = Student::paginate();

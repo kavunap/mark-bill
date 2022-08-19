@@ -71,5 +71,14 @@ class Course extends Model
     //     return $this->belongsTo(Test::class);
     // }
     
+    /**
+     * Get the teacher that owns the Course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
 }

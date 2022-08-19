@@ -89,7 +89,8 @@ class SchoolController extends Controller
     public function show($id)
     {
         $school = School::find($id);
-        $archives = $school->archives;
+        // $archives = Archive::where('school_id',$school->id);
+        $archives=$school->archives->sortByDesc('year');
         $new_archive = new Archive();
         $school_id=$school->id;
         

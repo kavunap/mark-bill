@@ -76,6 +76,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('schools.index') }}">{{ __('Schools') }}</a>
                             </li>
+                            @if (Auth::user()->user_role=="admin" && Auth::user()->school !=null && Auth::user()->school->archives->count()!=0)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
+                                </li>
+                            @endif
+                            
                             {{-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
                             </li>

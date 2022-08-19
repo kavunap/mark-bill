@@ -31,7 +31,7 @@ class ClassroomController extends Controller
     public function index()
     {
         if (Auth::user()->user_role=='admin') {
-            $classrooms=Auth::user()->school->archives->last()->classrooms()->paginate();
+            $classrooms=Auth::user()->school->archives->sortByDesc('year')->first()->classrooms()->paginate();
         }
         elseif(Auth::user()->user_role=='super_admin'){
             $classrooms=Classroom::paginate();
@@ -82,10 +82,10 @@ class ClassroomController extends Controller
     {
         $classroom = Classroom::find($id);
         if(Auth::user()->user_role=='admin'){
-            $courses = $classroom->courses;
+            $courses = $classroom->courses()->paginate();
         }
         elseif(Auth::user()->user_role=='teacher'){
-            $courses = $classroom->courses->where('user_id',Auth::user()->id);
+            $courses = $classroom->courses->where('user_id',Auth::user()->id)->paginate();
         }
         else{
             $courses=Course::paginate();

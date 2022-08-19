@@ -23,7 +23,12 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Update Course</span>
+                        <div class="float-left">
+                            <span class="card-title">Update Course</span>
+                        </div>
+                        <div class="float-right">
+                            <a class="btn btn-primary" href="{{ route('classrooms.show',$course->classroom->id) }}"> Back</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('courses.update', $course->id) }}"  role="form" enctype="multipart/form-data">
