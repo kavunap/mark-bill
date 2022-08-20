@@ -1,5 +1,8 @@
+@foreach ($classroom->students as $student)
 <!DOCTYPE html>
+
 <html>
+	
 <head>
 <style>
 	table, td, th, label {
@@ -51,12 +54,12 @@
 </style>
 </head>
 
-<body>
+	<body style="margin-left: 20px; margin-right: 20px;">
 	{{-- <div class="d-flex justify-content-end mb-4">
 		<a class="btn btn-primary" href="{{ route('download',$classroom->id) }}" target="blank">Export to PDF</a>
 	</div> --}}
-	@foreach ($classroom->students as $student)
-		<table style="width:100%;table-layout:fixed; border: 1px solid black;">
+	
+		<table style="width:100%;table-layout:fixed; border: 1px solid black; margin-right:10px">
 		<tr style="width:100%;height:50%">
 		<th colspan="16">
 		<div style="text-align:left">
@@ -91,24 +94,24 @@
 			<td colspan="3">Anual</td></tr>
 			<tr>
 			
-			<td>Test</td>
-			<td>Ex</td>
-			<td>Tot</td>
-			<td>Test</td>
-			<td>Ex</td>
-			<td>Tot</td>
-			<td>Test</td>
-			<td>Ex</td>
-			<td>Tot</td>
-			<td>Test</td>
-			<td>Ex</td>
-			<td>Tot</td>
-			<td>MAX</td>
-			<td>Tot</td>
-			<td>%</td>
+			<td style="width: 3%">Test</td>
+			<td style="width: 3%">Ex</td>
+			<td style="width: 3%">Tot</td>
+			<td style="width: 3%">Test</td>
+			<td style="width: 3%">Ex</td>
+			<td style="width: 3%">Tot</td>
+			<td style="width: 3%">Test</td>
+			<td style="width: 3%">Ex</td>
+			<td style="width: 3%">Tot</td>
+			<td style="width: 3%">Test</td>
+			<td style="width: 3%">Ex</td>
+			<td style="width: 3%">Tot</td>
+			<td style="width: 3%">MAX</td>
+			<td style="width: 3%">Tot</td>
+			<td style="width: 3%">%</td>
 			</tr>
 			<tr>
-			<td>Behavior</td>
+			<td style="width: 3%">Behavior</td>
 			<td colspan="3" style="text-align:right">120</td>
 			<td colspan="3" style="text-align:right"></td>
 			<td colspan="3"style="text-align:right"></td>
@@ -120,7 +123,7 @@
 			@foreach ($classroom->courses as $course)
 				
 				<tr>
-					<td width=25%>{{ $course->title }}</td><td>{{ $course->max }}</td><td>{{ $course->max }}</td><td>{{ $course->max *2 }}</td>
+					<td>{{ $course->title }}</td><td>{{ $course->max }}</td><td>{{ $course->max }}</td><td>{{ $course->max *2 }}</td>
 					{{-- @foreach ($student->marks as $mark)
 						@if ($mark->test->term=='Term 1' && $mark->test->type=="Test" && $mark->test->course_id==$course->id)
 							<td>{{ $test_term1 = $mark->marks }}</td>
@@ -307,7 +310,7 @@
 					@endif
 
 					<!-- Annual starts -->
-					<td>{{$course_annual=$course->max * 3}}</td> <td>{{ $annual_mark=$total1+ $total2 + $total3}} </td> <td>@if($course_annual!=0) {{$annual_mark/$course_annual*100}} @else 0 @endif</td>
+					<td>{{$course_annual=$course->max * 3}}</td> <td>{{ $annual_mark=$total1+ $total2 + $total3}} </td> <td>@if($course_annual!=0) {{round(($annual_mark/$course_annual*100),2)}} @else 0 @endif</td>
 					{{-- @foreach ($student->marks as $mark)
 						@if($mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test1=$mark->marks}}</td>@endif
 						@php
@@ -413,10 +416,10 @@
 				</th>
 			</tr>
 		</table>
-	@endforeach
-</body>
+	
+	</body>
 
 </html>
-
+@endforeach
   
      

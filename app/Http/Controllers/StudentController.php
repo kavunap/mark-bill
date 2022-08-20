@@ -80,12 +80,17 @@ class StudentController extends Controller
     {
         request()->validate(Student::$rules);
 
-        $student = Student::create($request->all());
-
-        // return redirect()->route('classrooms.show',$student->classroom->id)
-        //     ->with('success', 'Student created successfully.');
+        $ex_student=Student::where('classroom_id',$request->classroom_id)->where('name',$request->name)->first();
+        if ($ex_student == null) {
+            $student = Student::create($request->all());
 
             return redirect()->back()->with('success', 'Student created successfully.');
+        }
+        else{
+            return redirect()->back()->withErrors("You have already created this student!! If they have the same names please differenciate them with numbers or alphabets(eg:Paul 1 or Paul B)")->withInput();
+        }
+
+        
     }
 
     /**

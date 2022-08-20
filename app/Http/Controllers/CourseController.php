@@ -63,11 +63,18 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         request()->validate(Course::$rules);
+        $ex_course=Course::where('classroom_id',$request->classroom_id)->where('title',$request->title)->first();
+        if ($ex_course == null) {
+            $course = Course::create($request->all());
 
-        $course = Course::create($request->all());
+            return redirect()->route('classrooms.show',$course->classroom->id)
+                ->with('success', 'Course created successfully.');
+        }
+        else{
+            return redirect()->back()->withErrors("You have already created this course!! Please check in the list")->withInput();
+        }
 
-        return redirect()->route('classrooms.show',$course->classroom->id)
-            ->with('success', 'Course created successfully.');
+        
     }
 
     /**

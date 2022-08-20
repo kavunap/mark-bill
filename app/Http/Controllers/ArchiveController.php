@@ -55,11 +55,17 @@ class ArchiveController extends Controller
     public function store(Request $request)
     {
         request()->validate(Archive::$rules);
-
-        $archive = Archive::create($request->all());
+        $ex_archive=Archive::where('school_id',Auth::user()->school->id)->where('year',$request->year)->first();
+        if ($ex_archive == null) {
+            $archive = Archive::create($request->all());
 
         return redirect()->route('schools.show',$archive->school->id)
             ->with('success', 'Archive created successfully.');
+        }
+        else{
+            return redirect()->back()->withErrors("You have already created this academic year")->withInput();
+        }
+        
     }
 
     /**

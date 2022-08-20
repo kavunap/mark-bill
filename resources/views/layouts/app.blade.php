@@ -73,15 +73,19 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('schools.index') }}">{{ __('Schools') }}</a>
-                            </li>
                             @if (Auth::user()->user_role=="admin" && Auth::user()->school !=null && Auth::user()->school->archives->count()!=0)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('schools.index') }}">{{ __('Schools') }}</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
+                                </li>
+                            @elseif (Auth::user()->user_role=="teacher")
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
                                 </li>
                             @endif
                             
@@ -99,10 +103,6 @@
                                     <a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Users') }}</a>
                                 </li>
                             @endif
-                            
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
-                            </li>
                         @endguest
                     </ul>
                 </div>

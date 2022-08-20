@@ -66,10 +66,18 @@ class ClassroomController extends Controller
     {
         request()->validate(Classroom::$rules);
 
-        $classroom = Classroom::create($request->all());
+        $ex_class=Classroom::where('archive_id',$request->archive_id)->where('name',$request->name)->first();
+        if ($ex_class == null) {
+            $classroom = Classroom::create($request->all());
 
-        return redirect()->route('archives.show',$classroom->archive->id)
-            ->with('success', 'Classroom created successfully.');
+            return redirect()->route('archives.show',$classroom->archive->id)
+                ->with('success', 'Classroom created successfully.');
+        }
+        else{
+            return redirect()->back()->withErrors("You have already created this class!! Please check in the list")->withInput();
+        }
+
+        
     }
 
     /**
@@ -157,7 +165,7 @@ class ClassroomController extends Controller
     $classroom = Classroom::find($id);
     $school=$classroom->school;
         
-    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school','term'));   
+    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school','term'))->setPaper('a4', 'portrait');   
     return $pdf->download("class$classroom->id.pdf");
     }
 
