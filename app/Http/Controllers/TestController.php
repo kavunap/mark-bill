@@ -113,7 +113,7 @@ class TestController extends Controller
 
         $test->update($request->all());
 
-        return redirect()->route('tests.index')
+        return redirect()->route('courses.show',$test->course_id)
             ->with('success', 'Test updated successfully');
     }
 
@@ -124,9 +124,9 @@ class TestController extends Controller
      */
     public function destroy($id)
     {
-        $test = Test::find($id)->delete();
-
-        return redirect()->route('tests.index')
+        $test = Test::find($id);
+        $test->delete();
+        return redirect()->route('courses.show',$test->course_id)
             ->with('success', 'Test deleted successfully');
     }
 }

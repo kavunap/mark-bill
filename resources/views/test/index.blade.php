@@ -34,7 +34,6 @@
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
                                         
 										<th>Done On</th>
 										<th>Term</th>
@@ -47,7 +46,6 @@
                                 <tbody>
                                     @foreach ($tests as $test)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
                                             
 											<td>{{ $test->done_on }}</td>
 											<td>{{ $test->term }}</td>

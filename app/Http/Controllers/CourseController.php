@@ -88,8 +88,9 @@ class CourseController extends Controller
         $course = Course::find($id);
         $test = new Test;
         $students = $course->classroom->students;
+        $tests=$course->tests()->paginate();
 
-        return view('course.show', compact('course','students','test'));
+        return view('course.show', compact('course','students','test','tests'));
     }
 
     /**

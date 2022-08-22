@@ -51,6 +51,16 @@
                 </div>
             </div>
             <div class="col-sm-4">
+                <h3>Add Class</h3>
+                <form action="{{ route('classrooms.store') }}" method="POST">
+                    @csrf
+                    {{-- <input type="text" name="name" id="name" placeholder="Class Name" required> --}}
+                    @include('classroom.form')
+
+                    {{-- <input type="submit"> --}}
+                </form>
+            </div>
+            <div class="col-sm-4">
                 <h3>{{ $archive->classrooms->count() }} <strong>Classses</strong><br></h3> 
                 @foreach ($classrooms as $class )
                     <div class="form-group">
@@ -60,16 +70,6 @@
                         <strong>Courses:</strong>  {{ $class->courses->count() }}
                     </div>
                 @endforeach
-            </div>
-            <div class="col-sm-4">
-                <h3>Add Class</h3>
-                <form action="{{ route('classrooms.store') }}" method="POST">
-                    @csrf
-                    {{-- <input type="text" name="name" id="name" placeholder="Class Name" required> --}}
-                    @include('classroom.form')
-
-                    {{-- <input type="submit"> --}}
-                </form>
             </div>
         </div>
     </section>

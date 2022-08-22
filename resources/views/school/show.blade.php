@@ -52,8 +52,17 @@
                                 <div class="form-group">
                                     <strong>Stamp:</strong>
                                     <img src="{{ asset('stamps/' . $school->stamp) }}" alt="stamp" height="50px"/>
-                                    {{ $school->user->name }}
                                 </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3>Add New Academic Year</h3>
+                                <form action="{{ route('archives.store') }}" method="POST">
+                                    @csrf
+                                    {{-- <input type="text" name="name" id="name" placeholder="Class Name" required> --}}
+                                    @include('archive.form')
+
+                                    {{-- <input type="submit"> --}}
+                                </form>
                             </div>
                             <div class="col-sm-4">
                                 <h3>{{ $school->archives->count() }} <strong>Academic Year</strong><br></h3> 
@@ -66,16 +75,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="col-sm-4">
-                                <h3>Add New Academic Year</h3>
-                                <form action="{{ route('archives.store') }}" method="POST">
-                                    @csrf
-                                    {{-- <input type="text" name="name" id="name" placeholder="Class Name" required> --}}
-                                    @include('archive.form')
-
-                                    {{-- <input type="submit"> --}}
-                                </form>
-                            </div>
+                            
                         </div>
                         
 

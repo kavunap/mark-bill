@@ -19,22 +19,28 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
+                    
                     <div class="card-header">
+                        
                         <div class="float-left">
                             <span class="card-title">Classroom Details</span>
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('archives.show',$classroom->archive_id) }}"> Back</a>
                         </div>
-                        <div class="float-right">
-                            <a class="btn btn-sm btn-primary " href="{{ route('download',['id'=>$classroom->id, 'term'=>1]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports1</a>
+                        
+                        <div class="float-left">
+                            
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Reports
+                            </a>
+        
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>1]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports1</a>
+                                <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>2]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports2</a>
+                                <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>3]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports3</a>
                             </div>
-                        <div class="float-right">
-                        <a class="btn btn-sm btn-primary " href="{{ route('download',['id'=>$classroom->id, 'term'=>2]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports2</a>
                         </div>
-                        <div class="float-right">
-                            <a class="btn btn-sm btn-primary " href="{{ route('download',['id'=>$classroom->id, 'term'=>3]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports3</a>
-                            </div>
                     </div>
                     
                     <div class="card-body">
@@ -103,11 +109,6 @@
                         <div class="row">
                             
                             <div class="col-sm-8">
-                                <h3><strong>{{ $classroom->students->count() }}</strong> Students</h3>
-                                <a href="{{route('student.excel',$classroom->id)}}" class="btn btn-info">Download List</a><br>
-                                <div class="float-right">
-                                    
-                                </div>
                                 {{-- @foreach ($students as $student )
                                     <div class="form-group">
                                         
@@ -136,14 +137,8 @@
                                             <div style="display: flex; justify-content: space-between; align-items: center;">
                     
                                                 <span id="card_title">
-                                                    {{ __('Course') }}
+                                                    {{ $courses->count() }} {{Str::plural('Course', $courses->count())}}
                                                 </span>
-                    
-                                                 <div class="float-right">
-                                                    <a href="{{ route('courses.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                                      {{ __('Create New') }}
-                                                    </a>
-                                                  </div>
                                             </div>
                                         </div>
                     
