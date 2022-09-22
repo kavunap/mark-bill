@@ -27,9 +27,18 @@
                         <div class="float-left">
                             <span class="card-title">Show Course</span>
                         </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('classrooms.show',$course->classroom->id) }}"> Back</a>
-                        </div>
+                        @if (Auth::user()->user_role=='admin' || Auth::user()->user_role=='super_admin')
+                            <div class="float-right">
+                                <a class="btn btn-primary" href="{{ route('classrooms.show',$course->classroom->id) }}"> Back</a>
+                            </div>
+                        @else
+                            <div class="float-right">
+                                <a class="btn btn-primary" href="{{ route('courses.index') }}"> Back</a>
+                            </div>
+                        @endif
+                        
+
+                        
                     </div>
 
                     <div class="card-body">

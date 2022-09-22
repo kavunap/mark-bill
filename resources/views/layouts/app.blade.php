@@ -73,19 +73,29 @@
                                     </form>
                                 </div>
                             </li>
-                            @if (Auth::user()->user_role=="admin" && Auth::user()->school !=null && Auth::user()->school->archives->count()!=0)
+                            @if (Auth::user()->user_role=="admin" )
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('schools.index') }}">{{ __('Schools') }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
-                                </li>
+                                </li> --}}
+                                @if (Auth::user()->school !=null && Auth::user()->school->archives !=null && Auth::user()->school->archives->count()!=0)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('beh.list') }}">{{ __('Behavior') }}</a>
+                                    </li>
+                                @endif
+                                
                             @elseif (Auth::user()->user_role=="teacher")
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('courses.index') }}">{{ __('Courses') }}</a>
                                 </li>
                             @endif
                             

@@ -25,7 +25,7 @@ class Student extends Model
     
     static $rules = [
 		'name' => 'required',
-		'parent_phone' => 'required',
+		'parent_phone' => 'required|min:10|max:10',
 		'classroom_id' => 'required',
     ];
 
@@ -36,15 +36,24 @@ class Student extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','parent_phone','classroom_id'];
+    protected $fillable = ['name','parent_phone','classroom_id','sex'];
 
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+    // public function classroom()
+    // {
+    //     return $this->hasOne('App\Models\Classroom', 'id', 'classroom_id');
+    // }
+    /**
+     * Get the classroom that owns the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function classroom()
     {
-        return $this->hasOne('App\Models\Classroom', 'id', 'classroom_id');
+        return $this->belongsTo(Classroom::class);
     }
     
     /**
@@ -55,5 +64,14 @@ class Student extends Model
         return $this->hasMany('App\Models\Mark', 'student_id', 'id');
     }
     
+    /**
+     * Get all of the behaviors for the Student
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function behaviors()
+    {
+        return $this->hasMany(Behavior::class);
+    }
 
 }

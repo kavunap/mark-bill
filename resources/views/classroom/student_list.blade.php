@@ -17,8 +17,8 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                <a href="{{ route('beh.list') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                  {{ __('Back') }}
                                 </a>
                               </div>
                         </div>
@@ -55,7 +55,7 @@
 											<td>{{ $student->parent_phone }}</td>
 											<td>{{ $student->classroom->name }}</td>
                                             <td>@if ($student->behaviors->where('term','Term1')->count() !=0)
-                                                    {{$student->behaviors->where('term','Term1')->first()->marks}}
+                                                    {{$student->behaviors->where('term','Term1')->sortByDesc('created_at')->first()->marks}}
                                                 @else
                                                 -
                                                 @endif
@@ -63,7 +63,7 @@
 
                                             <td>
                                                 @if ($student->behaviors->where('term','Term2')->count() !=0)
-                                                    {{$student->behaviors->where('term','Term2')->first()->marks}}
+                                                    {{$student->behaviors->where('term','Term2')->sortByDesc('created_at')->first()->marks}}
                                                 @else
                                                 -
                                                 @endif
@@ -71,24 +71,21 @@
 
                                             <td>
                                                 @if ($student->behaviors->where('term','Term3')->count() !=0)
-                                                    {{$student->behaviors->where('term','Term3')->first()->marks}}
+                                                    {{$student->behaviors->where('term','Term3')->sortByDesc('created_at')->first()->marks}}
                                                 @else
                                                 -
                                                 @endif
                                             </td>
-
+                                            @php
+                                                
+                                                
+                                            @endphp
                                             <td colspan="4">
                                                 @if (Auth::user()->user_role=='admin')
                                                     
-                                                
-                                                    <form action="{{ route('students.destroy',$student->id) }}" method="POST">
-                                                        <a class="btn btn-sm btn-primary " href="{{ route('students.show',$student->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                        <a class="btn btn-sm btn-success" href="{{ route('students.edit',$student->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
-                                                        <a href="{{ route('student.addBehavior',$student->id)}}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-edit"></i> Behavior</a>
-                                                    </form>
+                                                    <a class="btn btn-sm btn-info" href="{{ route('students.show',$student->id) }}"><i class="fa fa-fw fa-eye"></i> Edit</a>
+                                                    <a href="{{ route('student.addBehavior',$student->id)}}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-edit"></i> Behavior</a>
+                                                    
                                                 @endif
                                             </td>
                                         </tr>

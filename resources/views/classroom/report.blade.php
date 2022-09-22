@@ -1,3 +1,9 @@
+@php
+	$position1 = array();
+	$previous = $rank= 0;
+	$current_score=0;
+	
+@endphp
 @foreach ($classroom->students as $student)
 <!DOCTYPE html>
 
@@ -19,18 +25,18 @@
 	
 	}
 	td{
-	width: 8px;
+	width: 6px;
 	margin-left: 0px;
 
 	}
 	p{
-	font-size:10px;
+	font-size:8px;
 	}
 	td{
-	font-size:13px;
+	font-size:10px;
 	}
 	h1{
-	font-size:25px;
+	font-size:20px;
 	}
 	label{
 	margin-left: 15px
@@ -60,28 +66,28 @@
 	</div> --}}
 	
 		<table style="width:100%;table-layout:fixed; border: 1px solid black; margin-right:10px">
-		<tr style="width:100%;height:50%">
+		<tr style="width:100%;height:20%">
 		<th colspan="16">
 		<div style="text-align:left">
-		<p style="font-size:13px;">REPUBLIC OF RWANDA<br>MINISTRY OF EDUCATION<BR>
+		<p style="font-size:12px">REPUBLIC OF RWANDA<br>MINISTRY OF EDUCATION<BR>
 		{{ $classroom->archive->school->location }}<BR>{{ $classroom->archive->school->name }}<BR>TEL: {{$classroom->archive->school->phone}}<BR>E-MAIL: {{$classroom->archive->school->email}}
 		<H1 style="text-align:center">STUDENT REPORT FORM</H1></p>
 		</div> 
 		</th>
 		</tr>
 		
-		<tr> 
-		<th colspan="16">
-		<div style="text-align:left; font-family: 'Times New Roman', Times, serif;letter-spacing: 2px;">
+	 
+		<td colspan="16">
+		<div style="font-size:12px;text-align:left; font-family: 'Times New Roman';letter-spacing: 2px;">
 		Student's Name: {{ $student->name }} <br>
-		&emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; School Year: <br>
+		School Year: {{ $student->classroom->archive->year }}<br>
 		Student's Number: {{ $student->st_code }} <br>
-		Sex: <br>
+		Sex: {{ $student->sex }}<br>
 
 		Class:{{ $classroom->name }} <br>
-		Combination: <br>
-		</tr>
-		</th>
+		
+		</td>
+		
 		</div> 
 		
 		<tr>
@@ -94,36 +100,66 @@
 			<td colspan="3">Anual</td></tr>
 			<tr>
 			
-			<td style="width: 3%">Test</td>
-			<td style="width: 3%">Ex</td>
-			<td style="width: 3%">Tot</td>
-			<td style="width: 3%">Test</td>
-			<td style="width: 3%">Ex</td>
-			<td style="width: 3%">Tot</td>
-			<td style="width: 3%">Test</td>
-			<td style="width: 3%">Ex</td>
-			<td style="width: 3%">Tot</td>
-			<td style="width: 3%">Test</td>
-			<td style="width: 3%">Ex</td>
-			<td style="width: 3%">Tot</td>
-			<td style="width: 3%">MAX</td>
-			<td style="width: 3%">Tot</td>
-			<td style="width: 3%">%</td>
+			<td style="width: 2%">Test</td>
+			<td style="width: 2%">Ex</td>
+			<td style="width: 2%">Tot</td>
+			<td style="width: 2%">Test</td>
+			<td style="width: 2%">Ex</td>
+			<td style="width: 2%">Tot</td>
+			<td style="width: 2%">Test</td>
+			<td style="width: 2%">Ex</td>
+			<td style="width: 2%">Tot</td>
+			<td style="width: 2%">Test</td>
+			<td style="width: 2%">Ex</td>
+			<td style="width: 2%">Tot</td>
+			<td style="width: 2%">MAX</td>
+			<td style="width: 2%">Tot</td>
+			<td style="width: 2%">%</td>
 			</tr>
 			<tr>
-			<td style="width: 3%">Behavior</td>
-			<td colspan="3" style="text-align:right">120</td>
-			<td colspan="3" style="text-align:right"></td>
-			<td colspan="3"style="text-align:right"></td>
-			<td colspan="3"style="text-align:right"></td>
+			<td style="width: 2%">Behavior</td>
+			<td colspan="3" style="text-align:right">40</td>
+			<td colspan="3" style="text-align:right">@if($student->behaviors->where('term','Term1')->count()>0){{$beh1=$student->behaviors->where('term','Term1')->first()->marks}}@else @php $beh1=0 @endphp - @endif</td>
+			<td colspan="3"style="text-align:right">@if($student->behaviors->where('term','Term2')->count()>0) {{$beh2=$student->behaviors->where('term','Term2')->first()->marks}} @else @php $beh2=0 @endphp - @endif</td>
+			<td colspan="3"style="text-align:right">@if($student->behaviors->where('term','Term3')->count()>0){{$beh3=$student->behaviors->where('term','Term3')->first()->marks}}@else @php $beh3=0 @endphp - @endif</td>
 			
-			<td style="text-align:right"></td>
-			<td style="text-align:right"></td>
-			<td style="text-align:right"></td>
+			<td style="text-align:right">120</td>
+			<td style="text-align:right">{{ $total_beh=$beh1 + $beh2 + $beh3}}</td>
+			<td style="text-align:right">{{ round($total_beh * 100 / 120,1)}}</td>
+			@php
+				$total_test1=0;
+				$total_ex1=0;
+				$max_test=0;
+				$total_max_ex=0;
+				if($term==2 || $term==3){
+					$total_test2=0;
+					$total_ex2=0;
+					$total_ex3=0;
+					$total_test3=0;
+				}
+					$total_course_annual=0;
+					$total_annual_mark=0;
+					$total_course_perc=0;
+				
+				
+			@endphp
 			@foreach ($classroom->courses as $course)
 				
 				<tr>
-					<td>{{ $course->title }}</td><td>{{ $course->max }}</td><td>{{ $course->max }}</td><td>{{ $course->max *2 }}</td>
+					<td>{{ $course->title }}</td>
+					{{-- <td>@if($course->tests->where('type','Quiz')->where('term','Term 1')->count()!=0) 
+						{{ $max1=$course->tests->where('type','Quiz')->where('term','Term 1')->first()->max }} @else 
+						{{$max1=0}} @endif
+					</td> --}}
+					<td>{{$max1=$course->max}}</td>
+						{{-- <td>@if($course->tests->where('type','Exam')->where('term','Term 1')->count() !=0 ) 
+							{{ $max2=$course->tests->where('type','Exam')->where('term','Term 1')->first()->max  }}
+							@else
+							{{$max2=0}}
+							@endif
+						</td> --}}
+						<td>{{$max2=$course->max}}</td>
+						<td>{{ $max_total=$max1 + $max2 }}</td>
 					{{-- @foreach ($student->marks as $mark)
 						@if ($mark->test->term=='Term 1' && $mark->test->type=="Test" && $mark->test->course_id==$course->id)
 							<td>{{ $test_term1 = $mark->marks }}</td>
@@ -209,7 +245,7 @@
 							{{$total1=$test1+$ex1}}
 						@endif
 					</td>
-
+					
 					@if ($term==2 || $term==3)
 						
 						@php
@@ -310,7 +346,7 @@
 					@endif
 
 					<!-- Annual starts -->
-					<td>{{$course_annual=$course->max * 3}}</td> <td>{{ $annual_mark=$total1+ $total2 + $total3}} </td> <td>@if($course_annual!=0) {{round(($annual_mark/$course_annual*100),2)}} @else 0 @endif</td>
+					<td>{{$course_annual=$max_total * 3}}</td> <td>{{ $annual_mark=$total1+ $total2 + $total3}} </td> <td>@if($course_annual!=0) {{$course_perc = round(($annual_mark/$course_annual*100),1)}} @else {{$course_perc=0}} @endif</td>
 					{{-- @foreach ($student->marks as $mark)
 						@if($mark->student_id==$student->id && $mark->test->term=="Term 1" && $mark->test->type=="Quiz" && $mark->test->course_id==$course->id)<td>{{$test1=$mark->marks}}</td>@endif
 						@php
@@ -362,18 +398,61 @@
 						<td width=25%>{{ $course->title }}</td><td></td><td></td><td>{{ $test->max }}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 					</tr>
 				@endforeach --}}
+				@php
+					$total_max_ex+=$max2;
+					$max_test+=$max1;
+
+					$total_ex1+=$ex1;
+					$total_test1+=$test1;
+					
+					if($term==2 || $term==3){
+						$total_ex2+=$ex2;
+						$total_test2+=$test2;
+						$total_ex3+=$ex3;
+						$total_test3+=$test3;
+					}
+						$total_course_annual+=$course_annual;
+						$total_annual_mark +=$annual_mark;
+						$total_course_perc +=$course_perc;
+					
+				@endphp
 			@endforeach
 			</tr>
 			
 			<tr>
-			<td>Total</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			{{-- <td>Total</td> <td>{{$max_test}}</td><td>{{$total_max_ex}}</td><td>{{$max_test+$total_max_ex}}</td><td>{{$total_test1}}</td><td>{{$total_ex1}}</td><td>{{$total_test1 + $total_ex1}}</td><td>{{$total_test2}}</td><td>{{$total_ex2}}</td><td>{{$total_test2 + $total_ex2}}</td><td>{{$total_test3}}</td><td>{{$total_ex3}}</td><td>{{$total_test3 + $total_ex3}}</td><td>{{$total_course_annual}}</td><td>{{$total_annual_mark}}</td><td>{{$total_course_perc}}</td> --}}
+			<td>Total</td> <td>{{$max_test}}</td><td>{{$total_max_ex}}</td><td>{{$total_max=$max_test+$total_max_ex}}</td><td>{{$total_test1}}</td><td>{{$total_ex1}}</td><td>{{$total_term1=$total_test1 + $total_ex1}}</td><td>@if($term==2 || $term==3) {{$total_test2}} @endif</td><td>@if($term==2 || $term==3){{$total_ex2}} @endif</td><td>@if($term==2 || $term==3) {{$total_term2=$total_test2 + $total_ex2}} @endif</td><td>@if($term==3){{$total_test3}}@endif</td><td>@if($term==3){{$total_ex3}}@endif</td><td>@if($term==3){{$total_term3=$total_test3 + $total_ex3}}@endif</td><td>{{$total_course_annual}}</td><td>{{$total_annual_mark}}</td><td>{{$total_course_perc}}</td>
+			
 			</tr>
 			<tr>
-			<td colspan="4">%</td><td colspan="3"style="text-align:right">%</td><td colspan="3"style="text-align:right">%</td><td colspan="3"style="text-align:right">%</td><td colspan="3"style="text-align:right">%</td>
+			<td colspan="4">Percent</td><td colspan="3"style="text-align:right"> {{$percent_term1=round($total_term1*100/$total_max,1) }} %</td><td colspan="3"style="text-align:right">@if($term==2 || $term==3){{round($total_term2*100/$total_max,1)}} @endif %</td><td colspan="3"style="text-align:right">@if($term==3){{round($total_term3*100/$total_max,1)}} @endif %</td><td colspan="3"style="text-align:right">{{round($total_annual_mark*100/$total_course_annual,1)}} %</td>
+			@php
+				
+				array_push($position1,$percent_term1);
+				rsort($position1);
+			@endphp
 			</tr>
 			<tr>
-			<td colspan="4">Position</td><td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td>
+			<td colspan="4">Position</td><td colspan="3"style="text-align:center"> 
+				@php
+					
+					// for($x = 0; $x < count($position1); $x++) {
+					// 	{ 
+							
+					// 		if($position1[$x] != $previous)$rank++;
+
+					// 		echo $rank;
+							
+					// 	} 
+					// }
+						if(end($position1)  != $previous)$rank++;
+						echo $rank;
+						$previous = end($position1);
+				@endphp
+			</td>
+			<td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td>
 			</tr>
+			
 			<tr style="height:20%">
 			<td colspan="4">Teacher's signature</td>
 			
@@ -391,9 +470,9 @@
 			<td colspan="3"></td>
 			</tr>
 			<tr style="">
-				<th colspan="16" style="width: 100%;height:20%">
+				<th colspan="16" style="width: 100%;height:10%">
 					<table style="table-layout:fixed; border: 1px solid black;">
-						<tr style="height:100%">
+						<tr style="height:100%; widthm: 10%">
 						<td style="text-align:left;" >
 						End of YearEvaluation and Decision<br>
 						1.  Promoted <br>
@@ -401,7 +480,7 @@
 						3.  Discontinued
 
 						</td>
-						<td style=""> Done at {{ $classroom->archive->school->location }} {{date('d-m-Y')}}<br>
+						<td style="text-align:left;" style=""> Done at {{ $classroom->archive->school->location }} {{date('d-m-Y')}}<br>
 						Headmaster  <br>
 						(stamp and signature)<br>
 						{{-- <img src="{{ asset('stamps/' . $classroom->school->stamp) }}" alt="stamp" height="50px"/> --}}
@@ -421,5 +500,11 @@
 
 </html>
 @endforeach
+@php
+
+	print_r($position1);
+
+	
+@endphp
   
      

@@ -20,7 +20,7 @@ class CreateStudentsTable extends Migration
             $table->string('parent_phone');
             $table->string('st_code');
             $table->unsignedBigInteger('classroom_id');
-            $table->foreign('classroom_id')->references('id')->on('classrooms');
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
             $table->timestamps();
         });
     }

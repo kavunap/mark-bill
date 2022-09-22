@@ -102,8 +102,9 @@ class StudentController extends Controller
     public function show($id)
     {
         $student = Student::find($id);
+        $behaviors=$student->behaviors->sortBy('term');
 
-        return view('student.show', compact('student'));
+        return view('student.show', compact('student','behaviors'));
     }
 
     /**
@@ -145,7 +146,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = Student::find($id)->delete();
+        $student = Student::find($id);
+        $student->delete();
 
         return redirect()->route('classrooms.show',$student->classroom_id)
             ->with('success', 'Student deleted successfully');

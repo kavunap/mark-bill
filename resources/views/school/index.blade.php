@@ -24,12 +24,14 @@
                             <span id="card_title">
                                 {{ __('School') }}
                             </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('schools.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
+                            @if (Auth::user()->user_role=="admin" && Auth::user()->school==null)
+                                <div class="float-right">
+                                    <a href="{{ route('schools.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                    {{ __('Create New') }}
+                                    </a>
+                                </div>
+                            @endif
+                             
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -75,7 +77,7 @@
                                                     <a class="btn btn-sm btn-success" href="{{ route('schools.edit',$school->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                    {{-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button> --}}
                                                 </form>
                                             </td>
                                         </tr>

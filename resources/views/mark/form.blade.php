@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('marks') }}
-            {{ Form::number('marks', $mark->marks, ['class' => 'form-control' . ($errors->has('marks') ? ' is-invalid' : ''), 'placeholder' => 'Marks']) }}
+            {{ Form::number('marks', $mark->marks, ['class' => 'form-control' . ($errors->has('marks') ? ' is-invalid' : ''), 'placeholder' => 'Marks','step'=>".01"]) }}
             {!! $errors->first('marks', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">

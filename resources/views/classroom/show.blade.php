@@ -28,19 +28,20 @@
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('archives.show',$classroom->archive_id) }}"> Back</a>
                         </div>
-                        
-                        <div class="float-left">
-                            
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Reports
-                            </a>
-        
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>1]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports1</a>
-                                <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>2]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports2</a>
-                                <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>3]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports3</a>
+                        @if (Auth::user()->user_role=="admin" || Auth::user()->user_role=="super_admin")
+                            <div class="float-left">
+                                
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Reports
+                                </a>
+            
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>1]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports1</a>
+                                    <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>2]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports2</a>
+                                    <a class="dropdown-item" href="{{ route('download',['id'=>$classroom->id, 'term'=>3]) }}" target="blank"><i class="fa fa-fw fa-eye"></i> Reports3</a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     
                     <div class="card-body">
@@ -79,29 +80,31 @@
                                 @endif
                                 
                             </div>
-                            <div class="col-sm-4">
-                                <h3><strong>Add</strong> Course</h3>
-                                <form method="POST" action="{{ route('courses.store') }}"  role="form" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
-
-                                    @include('course.form')
-        
-                                </form>
-                            </div>
-                            <div class="col-sm-4">
-                                <h3>Add Student</h3>
-                                    <form action="{{ route('students.store') }}" method="POST">
+                            @if (Auth::user()->user_role=="admin" || Auth::user()->user_role=="super_admin")
+                                <div class="col-sm-4">
+                                    <h3><strong>Add</strong> Course</h3>
+                                    <form method="POST" action="{{ route('courses.store') }}"  role="form" enctype="multipart/form-data">
                                         @csrf
-                                        @include('student.form')
-
                                         <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
-                                        {{-- <input type="submit"> --}}
-                                        <div class="box-footer mt20">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
+
+                                        @include('course.form')
+            
                                     </form>
-                            </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3>Add Student</h3>
+                                        <form action="{{ route('students.store') }}" method="POST">
+                                            @csrf
+                                            @include('student.form')
+
+                                            <input type="hidden" name="classroom_id" value="{{ $classroom->id }}">
+                                            {{-- <input type="submit"> --}}
+                                            <div class="box-footer mt20">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -158,10 +161,10 @@
                                                     <tbody>
                                                         @foreach ($courses as $course)
                                                             <tr>
-                                                                <td><a href="{{route('courses.show',$course->id)}}">{{ ++$i }}</a></td>
+                                                                <td>{{ ++$i }}</td>
                                                                 
-                                                                <td><a href="{{route('courses.show',$course->id)}}">{{ $course->title }}</a></td>
-                                                                <td><a href="{{route('courses.show',$course->id)}}">{{ $course->max }}</a></td>
+                                                                <td>{{ $course->title }}</td>
+                                                                <td>{{ $course->max }}</td>
                     
                                                                 <td>
                                                                     

@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('year') }}
-            {{ Form::number('year', $new_archive->year, ['class' => 'form-control' . ($errors->has('year') ? ' is-invalid' : ''), 'placeholder' => 'Year']) }}
+            {{ Form::number('year', $new_archive->year, ['class' => 'form-control' . ($errors->has('year') ? ' is-invalid' : ''), 'placeholder' => 'Year','min' => date("Y")]) }}
             {!! $errors->first('year', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

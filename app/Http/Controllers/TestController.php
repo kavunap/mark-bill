@@ -111,10 +111,25 @@ class TestController extends Controller
     {
         request()->validate(Test::$rules);
 
-        $test->update($request->all());
+        $course=Course::find($request->course_id);
 
-        return redirect()->route('courses.show',$test->course_id)
-            ->with('success', 'Test updated successfully');
+        $ex_test=Test::where('course_id',$request->course_id)->where('type',$request->type)->where('term',$request->term)->first();
+        
+        if($course->user_id != Auth::user()->id && Auth::user()->user_role!="admin"){
+            return redirect()->back()->withErrors("Oooops! You are not the one who will teach this course!!")->withInput();
+        }
+        elseif ($ex_test != null){
+
+            return redirect()->back()->withErrors("Oooops! You have already created {$ex_test->type} for {$ex_test->term}!!")->withInput();
+        }
+        else{
+            $test->update($request->all());
+
+            return redirect()->route('courses.show',$test->course_id)
+                ->with('success', 'Test updated successfully');
+        }
+
+        
     }
 
     /**

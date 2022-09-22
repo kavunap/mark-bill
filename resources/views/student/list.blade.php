@@ -19,6 +19,7 @@
                                     <th>Student number</th>
                                     <th>Name</th>
                                     <th>Parent Phone</th>
+                                    <th>Sex</th>
                                     
                                     
                                     
@@ -33,14 +34,19 @@
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->name }}</td>
                                         <td>{{ $student->parent_phone }}</td>
+                                        <td>{{ $student->sex }}</td>
                                         
                                         <td>
+                                            @if (Auth::user()->user_role=="admin")
                                             <form action="{{ route('students.destroy',$student->id) }}" method="POST">
                                                 <a class="btn btn-sm btn-success" href="{{ route('students.edit',$student->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                {{-- <a href="{{ route('student.addBehavior',$student->id)}}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-edit"></i> Behavior</a> --}}
                                             </form>
+                                            @endif
+                                            
                                         </td>
                                     </tr>
                                 @endforeach

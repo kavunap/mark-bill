@@ -10,6 +10,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\BehaviorController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -65,3 +66,7 @@ Route::resource('/archives', ArchiveController::class)->middleware('auth');
 Route::get('/user_dashobard', [UserController::class, 'dashboard'])->middleware('auth')->name('dashboard.index');
 Route::get('/student_list', [StudentController::class, 'list'])->middleware('auth')->name('student.list');
 Route::get('/student_excel/{classroom}', [StudentController::class, 'excel_list'])->middleware('auth')->name('student.excel');
+Route::resource('/behaviors', BehaviorController::class);
+Route::get('/add-behavior/{student}', [BehaviorController::class, 'add_behavior'])->middleware('auth')->name('student.addBehavior');
+Route::get('/beh-list', [BehaviorController::class, 'list'])->middleware('auth')->name('beh.list');
+Route::get('/beh-class/{classroom_id}', [BehaviorController::class, 'classList'])->middleware('auth')->name('beh.classList');

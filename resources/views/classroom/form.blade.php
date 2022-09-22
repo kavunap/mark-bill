@@ -8,13 +8,14 @@
         </div>
         <div class="form-group">
             {{ Form::label('class_teacher') }} <br>
-            {{ Form::select('tutor_id', $teachers, ['class' => 'form-control' . ($errors->has('tutor_id') ? ' is-invalid' : ''), 'placeholder' => 'Classroom tutor']) }}
+            {{ Form::select('tutor_id', $teachers, $classroom->tutor_id, ['class' => '' . ($errors->has('tutor_id') ? ' is-invalid' : ''), 'placeholder' => 'Classroom tutor']) }}
             {!! $errors->first('tutor_id', '<div class="invalid-feedback">:message</p>') !!}
         </div>
-        <input type="hidden" name="archive_id" value="{{ $archive_id }}">
+        <input type="hidden" name="archive_id" value="{{ $archive->id }}">
 
     </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-primary" href="{{ route('archives.show',$archive->id) }}"> Cancel</a>
     </div>
 </div>

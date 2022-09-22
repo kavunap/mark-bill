@@ -62,14 +62,53 @@
             </div>
             <div class="col-sm-4">
                 <h3>{{ $archive->classrooms->count() }} <strong>Classses</strong><br></h3> 
-                @foreach ($classrooms as $class )
+                {{-- @foreach ($classrooms as $class )
                     <div class="form-group">
                         
                         <a href="{{ route('classrooms.show',$class->id) }}"><strong>{{ $class->name }}</strong></a> 
                         <strong>Students:</strong> {{ $class->students->count() }}
                         <strong>Courses:</strong>  {{ $class->courses->count() }}
                     </div>
-                @endforeach
+                @endforeach --}}
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead">
+                                <tr>
+                                    
+                                    <th>Name</th>
+                                    <th>School</th>
+
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($classrooms as $classroom)
+                                    <tr>
+                                        
+                                        <td>{{ $classroom->name }}</td>
+                                        <td>{{ $classroom->archive->school->name }}</td>
+
+                                        <td>
+                                            <form action="{{ route('classrooms.destroy',$classroom->id) }}" method="POST">
+                                                <a class="btn btn-sm btn-primary " href="{{ route('classrooms.show',$classroom->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                                                @if (Auth::user()->user_role=="admin")
+                                                    <a class="btn btn-sm btn-success" href="{{ route('classrooms.edit',$classroom->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                @endif
+                                                
+                                                @csrf
+                                                @method('DELETE')
+                                                @if (Auth::user()->user_role=="admin")
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                @endif
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

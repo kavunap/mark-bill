@@ -56,7 +56,7 @@
             <div class="pull-left">
                 <h2 id="h1">List of students in {{ $test->course->classroom->name }} </h2>
             </div>
-            <div class="pull-right pl-5">
+            {{-- <div class="pull-right pl-5">
                 <a class="btn btn-success text-light" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
                     data-attr="{{ route('tests.edit',$test->id) }}" title="Edit test"> <i class="fas fa-edit"></i>
                 </a>
@@ -65,7 +65,7 @@
                 <a class="btn btn-success text-light" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
                     data-attr="{{ route('students.create') }}" title="Create a student"> <i class="fas fa-plus-circle"></i>
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -102,7 +102,7 @@
                     <td>{{ $student->name }}</td>
                     <td>@if($test->marks->where('student_id',$student->id)->first()!=null) {{ $test->marks->where('student_id',$student->id)->first()->marks }}@endif</td>
                     <td class="form-inline">
-                        <form action="{{ route('students.destroy', $student->id) }}" method="POST">
+                        {{-- <form action="{{ route('students.destroy', $student->id) }}" method="POST">
 
                             
 
@@ -121,12 +121,18 @@
                             <button type="submit" title="delete" style="border: none; background-color:transparent;">
                                 <i class="fas fa-trash fa-lg text-danger"></i>
                             </button>
-                        </form>
+                        </form> --}}
 
                         <a data-toggle="modal" id="mediumButton" data-target="#mediumModal"
                             data-attr="{{ route('marks.create') }}" title="Record Marks" data-st-id="{{ $student->id }}" data-t-id="{{ $test->id }}">
                             <i class="fas fa-book text-success  fa-lg"></i>
                         </a>
+
+                        <a data-toggle="modal" id="mediumButton" data-target="#mediumModal"
+                            data-attr="{{ route('students.show',$student->id) }}" title="Record Marks" data-st-id="{{ $student->id }}" data-t-id="{{ $test->id }}">
+                            <i class="fas fa-book text-success  fa-lg"></i>
+                        </a>
+
                     </td>
                 </tr>
             @endforeach

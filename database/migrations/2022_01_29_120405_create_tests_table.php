@@ -20,7 +20,7 @@ class CreateTestsTable extends Migration
             $table->string('type')->default('exam');
             $table->timestamps();
             $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

@@ -15,7 +15,7 @@ class AddFieldsToClassrooms extends Migration
     {
         Schema::table('classrooms', function (Blueprint $table) {
             $table->unsignedBigInteger('tutor_id')->nullable();
-            $table->foreign('tutor_id')->nullable()->references('id')->on('users');
+            $table->foreign('tutor_id')->nullable()->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -30,7 +30,7 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->user_role=='admin') {
+        if (Auth::user()->user_role=='admin' && Auth::user()->school !=null) {
             $classrooms=Auth::user()->school->archives->sortByDesc('year')->first()->classrooms()->paginate();
         }
         elseif(Auth::user()->user_role=='super_admin'){
@@ -53,6 +53,7 @@ class ClassroomController extends Controller
     public function create()
     {
         $classroom = new Classroom();
+        
         return view('classroom.create', compact('classroom'));
     }
 
@@ -93,7 +94,7 @@ class ClassroomController extends Controller
             $courses = $classroom->courses()->paginate();
         }
         elseif(Auth::user()->user_role=='teacher'){
-            $courses = $classroom->courses->where('user_id',Auth::user()->id)->paginate();
+            $courses = $classroom->courses()->where('user_id',Auth::user()->id)->paginate();
         }
         else{
             $courses=Course::paginate();
@@ -121,9 +122,11 @@ class ClassroomController extends Controller
      */
     public function edit($id)
     {
+        
         $classroom = Classroom::find($id);
-
-        return view('classroom.edit', compact('classroom'));
+        $archive=$classroom->archive;
+        $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
+        return view('classroom.edit', compact('classroom','teachers','archive'));
     }
 
     /**
@@ -150,9 +153,10 @@ class ClassroomController extends Controller
      */
     public function destroy($id)
     {
-        $classroom = Classroom::find($id)->delete();
+        $classroom = Classroom::find($id);
+        $classroom->delete();
 
-        return redirect()->route('classrooms.index')
+        return redirect()->route('archives.show',$classroom->archive_id)
             ->with('success', 'Classroom deleted successfully');
     }
 

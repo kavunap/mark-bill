@@ -83,7 +83,7 @@ class ArchiveController extends Controller
         $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
 
 
-        return view('archive.show', compact('archive','classrooms','classroom','teachers','archive_id'));
+        return view('archive.show', compact('archive','classrooms','classroom','teachers'));
     }
 
     /**
@@ -112,7 +112,7 @@ class ArchiveController extends Controller
 
         $archive->update($request->all());
 
-        return redirect()->route('archives.index')
+        return redirect()->route('schools.show',$archive->school->id)
             ->with('success', 'Archive updated successfully');
     }
 

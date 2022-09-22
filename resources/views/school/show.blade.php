@@ -66,14 +66,47 @@
                             </div>
                             <div class="col-sm-4">
                                 <h3>{{ $school->archives->count() }} <strong>Academic Year</strong><br></h3> 
-                                @foreach ($archives as $archive )
+                                {{-- @foreach ($archives as $archive )
                                     <div class="form-group">
                                         
                                         <a href="{{ route('archives.show',$archive->id) }}"><strong>{{ $archive->year }}</strong></a> 
                                         <strong>Classrooms:</strong> {{ $archive->classrooms->count() }}
-                                        {{-- <strong>Courses:</strong>  {{ $class->courses->count() }} --}}
                                     </div>
-                                @endforeach
+                                @endforeach --}}
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="thead">
+                                                <tr>
+                                                    
+                                                    <th>Year</th>
+                                                    <th>Academic Year</th>
+            
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($archives as $archive)
+                                                    <tr>
+                                                        
+                                                        <td>{{ $archive->year }}</td>
+                                                        <td>{{ $archive->academic_year }}</td>
+            
+                                                        <td>
+                                                            <form action="{{ route('archives.destroy',$archive->id) }}" method="POST">
+                                                                <a class="btn btn-sm btn-primary " href="{{ route('archives.show',$archive->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
+                                                                <a class="btn btn-sm btn-success" href="{{ route('archives.edit',$archive->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                {{-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button> --}}
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             
                         </div>

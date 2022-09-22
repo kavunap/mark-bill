@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Update Test
+    Create Behavior
 @endsection
 
 @section('content')
     <section class="content container-fluid">
-        <div class="">
+        <div class="row">
             <div class="col-md-12">
 
                 {{-- @includeif('partials.errors') --}}
@@ -22,17 +22,13 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">Update Test</span>
-                        <div class="float-right">
-                            <a class="btn btn-primary" href="{{route('courses.show',$test->course_id)}}"> Back</a>
-                        </div>
+                        <span class="card-title">Create Behavior</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('tests.update', $test->id) }}"  role="form" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
+                        <form method="POST" action="{{ route('behaviors.store') }}"  role="form" enctype="multipart/form-data">
                             @csrf
 
-                            @include('test.form')
+                            @include('behavior.form')
 
                         </form>
                     </div>
