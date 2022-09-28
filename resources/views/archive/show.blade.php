@@ -99,7 +99,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 @if (Auth::user()->user_role=="admin")
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                 @endif
                                             </form>
                                         </td>
