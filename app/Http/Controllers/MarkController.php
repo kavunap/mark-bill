@@ -6,6 +6,7 @@ use App\Models\Mark;
 use App\Models\Test;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class MarkController
@@ -54,7 +55,7 @@ class MarkController extends Controller
     {
         request()->validate(Mark::$rules);
         $test= Test::find($request->test_id);
-        $student=Student::find($request->user_id);
+        $student=Student::find($request->student_id);
         $recordings=Mark::where('student_id','=',$request->student_id)->where('test_id','=',$request->test_id)->count();
         if($request->marks > $test->max){
             return redirect()->back()->withErrors('Marks can not be greater than maximum');
@@ -63,8 +64,23 @@ class MarkController extends Controller
             return redirect()->back()->withErrors('This student`s marks already recorded for this test');
         }
         else{
-            $mark = Mark::create($request->all());
-            return redirect()->back()->with('success', "Marks recorded successfully.{$recordings}");
+            // DB::beginTransaction();
+                $mark = Mark::create($request->all());
+
+                if($mark->test->term == 'Term 1'){
+                    $student->total_term1+=$mark->marks;
+                    $student->save();
+                }
+                elseif($mark->test->term == 'Term 2'){
+                    $student->total_term2+=$mark->marks;
+                    $student->save();
+                }
+                elseif($mark->test->term == 'Term 3'){
+                    $student->total_term3+=$mark->marks;
+                    $student->save();
+                }
+
+            return redirect()->back()->with('success', "Marks recorded successfully.");
         }
         
 

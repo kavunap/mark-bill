@@ -103,6 +103,7 @@ class ClassroomController extends Controller
         // $students = $classroom->students;
         $new_student = new Student();
         $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
+        
         // $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
         $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
         $course = new Course();
@@ -163,14 +164,50 @@ class ClassroomController extends Controller
     public function genReport($id,$term){
         $classroom = Classroom::find($id);
         return view('classroom.report',compact('classroom'));
-      }
+    }
       
     public function createPDF($id,$term) {
     $classroom = Classroom::find($id);
+    $previous1 = 0;
+    $rank1= 0;
+    $previous2 = 0;
+    $rank2= 0;
+    $previous3 = 0;
+    $rank3= 0;
+    $previous_yr = 0;
+    $rankyr= 0;
+        foreach ($classroom->students->sortByDesc('total_term1') as $student) {
+            
+            if($student->total_term1  != $previous1){
+                $rank1++;
+            }
+            if($student->total_term2  != $previous2){
+                $rank2++;
+            }
+            if($student->total_term3  != $previous3){
+                $rank3++;
+            }
+            
+            $total_year=$student->total_term1+$student->total_term2+$student->total_term3;
+            if($total_year  != $previous_yr){
+                $rankyr++;
+            }
+            
+            $student->rank_term1=$rank1;
+            $student->rank_term2=$rank2;
+            $student->rank_term3=$rank3;
+            $student->rank_year=$rankyr;
+            $student->save();
+            $previous1 = $student->total_term1;
+            $previous2 = $student->total_term2;
+            $previous3 = $student->total_term3;
+            $previous_yr = $total_year;
+            
+        }
     $school=$classroom->school;
         
     $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school','term'))->setPaper('a4', 'portrait');   
-    return $pdf->download("class$classroom->id.pdf");
+    return $pdf->download("class$classroom->name.pdf");
     }
 
     

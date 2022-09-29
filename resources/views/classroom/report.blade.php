@@ -1,10 +1,5 @@
-@php
-	$position1 = array();
-	$previous = $rank= 0;
-	$current_score=0;
-	
-@endphp
-@foreach ($classroom->students as $student)
+
+@foreach ($classroom->students->sortByDesc('total_term1') as $student)
 <!DOCTYPE html>
 
 <html>
@@ -405,9 +400,12 @@
 					$total_ex1+=$ex1;
 					$total_test1+=$test1;
 					
-					if($term==2 || $term==3){
+					if($term==2){
 						$total_ex2+=$ex2;
 						$total_test2+=$test2;
+						
+					}
+					elseif ($term==3) {
 						$total_ex3+=$ex3;
 						$total_test3+=$test3;
 					}
@@ -421,36 +419,18 @@
 			
 			<tr>
 			{{-- <td>Total</td> <td>{{$max_test}}</td><td>{{$total_max_ex}}</td><td>{{$max_test+$total_max_ex}}</td><td>{{$total_test1}}</td><td>{{$total_ex1}}</td><td>{{$total_test1 + $total_ex1}}</td><td>{{$total_test2}}</td><td>{{$total_ex2}}</td><td>{{$total_test2 + $total_ex2}}</td><td>{{$total_test3}}</td><td>{{$total_ex3}}</td><td>{{$total_test3 + $total_ex3}}</td><td>{{$total_course_annual}}</td><td>{{$total_annual_mark}}</td><td>{{$total_course_perc}}</td> --}}
-			<td>Total</td> <td>{{$max_test}}</td><td>{{$total_max_ex}}</td><td>{{$total_max=$max_test+$total_max_ex}}</td><td>{{$total_test1}}</td><td>{{$total_ex1}}</td><td>{{$total_term1=$total_test1 + $total_ex1}}</td><td>@if($term==2 || $term==3) {{$total_test2}} @endif</td><td>@if($term==2 || $term==3){{$total_ex2}} @endif</td><td>@if($term==2 || $term==3) {{$total_term2=$total_test2 + $total_ex2}} @endif</td><td>@if($term==3){{$total_test3}}@endif</td><td>@if($term==3){{$total_ex3}}@endif</td><td>@if($term==3){{$total_term3=$total_test3 + $total_ex3}}@endif</td><td>{{$total_course_annual}}</td><td>{{$total_annual_mark}}</td><td>{{$total_course_perc}}</td>
+			<td>Total</td> <td>{{$max_test}}</td><td>{{$total_max_ex}}</td><td>{{$total_max=$max_test+$total_max_ex}}</td><td>{{$total_test1}}</td><td>{{$total_ex1}}</td><td>{{$total_term1=$student->total_term1}}</td><td>@if($term==2 || $term==3) {{$total_test2}} @endif</td><td>@if($term==2 || $term==3){{$total_ex2}} @endif</td><td>@if($term==2 || $term==3) {{$total_term2=$student->total_term2}} @endif</td><td>@if($term==3){{$total_test3}}@endif</td><td>@if($term==3){{$total_ex3}}@endif</td><td>@if($term==3){{$total_term3=$student->total_term3}}@endif</td><td>{{$total_course_annual}}</td><td>{{$student->total_term1+$student->total_term2+$student->total_term3}}</td><td>{{$total_course_perc}}</td>
 			
 			</tr>
 			<tr>
 			<td colspan="4">Percent</td><td colspan="3"style="text-align:right"> {{$percent_term1=round($total_term1*100/$total_max,1) }} %</td><td colspan="3"style="text-align:right">@if($term==2 || $term==3){{round($total_term2*100/$total_max,1)}} @endif %</td><td colspan="3"style="text-align:right">@if($term==3){{round($total_term3*100/$total_max,1)}} @endif %</td><td colspan="3"style="text-align:right">{{round($total_annual_mark*100/$total_course_annual,1)}} %</td>
-			@php
-				
-				array_push($position1,$percent_term1);
-				rsort($position1);
-			@endphp
+			
 			</tr>
 			<tr>
 			<td colspan="4">Position</td><td colspan="3"style="text-align:center"> 
-				@php
-					
-					// for($x = 0; $x < count($position1); $x++) {
-					// 	{ 
-							
-					// 		if($position1[$x] != $previous)$rank++;
-
-					// 		echo $rank;
-							
-					// 	} 
-					// }
-						if(end($position1)  != $previous)$rank++;
-						echo $rank;
-						$previous = end($position1);
-				@endphp
+				{{$student->rank_term1}}/{{$classroom->students->count()}}
 			</td>
-			<td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td><td colspan="3"style="text-align:center"></td>
+			<td colspan="3"style="text-align:center">@if($term==2 || $term==3){{$student->rank_term2}}/{{$classroom->students->count()}}@endif</td><td colspan="3"style="text-align:center">@if($term==3){{$student->rank_term3}}/{{$classroom->students->count()}}@endif</td><td colspan="3"style="text-align:center">{{$student->rank_year}}/{{$classroom->students->count()}}</td>
 			</tr>
 			
 			<tr style="height:20%">
@@ -500,11 +480,6 @@
 
 </html>
 @endforeach
-@php
 
-	print_r($position1);
-
-	
-@endphp
   
      
