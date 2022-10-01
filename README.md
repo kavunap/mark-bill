@@ -12,6 +12,10 @@ Mark Bill is a web application developed in Laravel for helping schools and stud
 - Marks recording
 - Report generation
 - Reliable searches
+- Students documents requesting
+- Staff dosuments requesting
+- School Library Control
+- 
 
 
 ### Premium Partners
