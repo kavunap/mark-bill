@@ -77,13 +77,18 @@ class BehaviorController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $classrooms->perPage());
     }
 
-    public function classList($classroom_id){
+    public function classList($classroom_id,Request $request){
         $classroom = Classroom::find($classroom_id);
         
         
         // $students = $classroom->students;
         $behaviors=Behavior::all();
-        $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
+        if($request->has('search')){
+    		$students = Student::search($request->get('search'))->orderBy('name')->where('classroom_id',$classroom->id)->paginate();	
+    	}else{
+            $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
+        }
+        
         
         return view('classroom.student_list', compact('students','behaviors'))
             ->with('i', (request()->input('page', 1) - 1) * $students->perPage());

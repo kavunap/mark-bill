@@ -24,6 +24,8 @@
         "webpack": "^5.73.0"
     },
     "dependencies": {
+        "@algolia/autocomplete-js": "^1.7.1",
+        "@algolia/autocomplete-theme-classic": "^1.7.1",
         "laravel-echo": "^1.11.3",
         "pusher-js": "^7.0.6"
     }

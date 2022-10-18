@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" id="autocomplete">
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -7,7 +7,22 @@
                         <span class="card-title">{{ $students->count() }} {{Str::plural('Student', $students->count())}}</span>
                     </div>
                     <div class="float-right">
-                        <a href="{{route('student.excel',$classroom->id)}}" class="btn btn-sm btn-info">Download List</a>
+                        {{-- <form action="{{route('st.search')}}" role="form" enctype="multipart/form-data" method="POST">
+                            @csrf
+                            <input type="text" name="name">
+                            <input type="hidden" name="class_id" value="{{$classroom->id}}">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form> --}}
+                        <form method="GET" action="{{ route('classrooms.show',$classroom->id) }}">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <input type="text" name="search" class="form-control" placeholder="Search">
+                              </div>
+                              <div class="col-md-6">
+                                  <button class="btn btn-primary">Search</button>
+                              </div>
+                          </div>
+                      </form>
                     </div>
                 </div>
                 <div class="card-body">
@@ -55,7 +70,47 @@
                     </div>
                 </div>
             </div>
+            <a href="{{route('student.excel',$classroom->id)}}" class="btn btn-sm btn-info">Download List</a>
             {!! $students->links() !!}
         </div>
     </div>
 </div>
+<script>
+    import algoliasearch from 'algoliasearch/lite';
+    import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
+    
+    import '@algolia/autocomplete-theme-classic';
+    
+    const searchClient = algoliasearch(
+      'latency',
+      '6be0576ff61c053d5f9a3225e2a90f76'
+    );
+    
+    autocomplete({
+      container: '#autocomplete',
+      placeholder: 'Search for students',
+      getSources({ query }) {
+        return [
+          {
+            sourceId: 'students',
+            getItems() {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: 'autocomplete',
+                    query,
+                    params: {
+                      hitsPerPage: 5,
+                    },
+                  },
+                ],
+              });
+            },
+            // ...
+          },
+        ];
+      },
+    });
+    
+            </script>

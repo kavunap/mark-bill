@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="author" content="Themezhub" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>SkillUp - Online Learning Platform</title>
+        <title>Markshub - Smart marks recording platform</title>
 		 
         <!-- Custom CSS -->
         <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
@@ -26,8 +26,8 @@
 				<div class="container">
 					<nav id="navigation" class="navigation navigation-landscape">
 						<div class="nav-header">
-							<a class="nav-brand" href="#">
-								<img src="assets/img/logo.png" class="logo" alt="" />
+							<a class="nav-brand" href="/">
+								<img src="{{asset('assets/img/logo.jpeg')}}" class="logo" alt="Brothers technoloies" />
 							</a>
 							<div class="nav-toggle"></div>
 							<div class="mobile_nav">
@@ -46,7 +46,7 @@
 								<li class="active"><a href="/">Home</a>
 								</li>
 								
-								<li><a href="#">Courses<span class="submenu-indicator"></span></a>
+								{{-- <li><a href="#">Courses<span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
 										<li><a href="#">Search Courses in Grid<span class="submenu-indicator"></span></a>
 											<ul class="nav-dropdown nav-submenu">
@@ -79,9 +79,19 @@
 										<li><a href="find-instructor.html">Find Instructor</a></li>
 										<li><a href="instructor-detail.html">Instructor Detail</a></li>
 									</ul>
+								</li> --}}
+
+								<li><a href="#">Services<span class="submenu-indicator"></span></a>
+									<ul class="nav-dropdown nav-submenu">
+										
+										
+										<li><a href="{{route('schools.index')}}">MarksHub</a></li>
+										<li><a href="#">Short term training</a></li>
+										<li><a href="#">Online courses</a></li>
+									</ul>
 								</li>
 								
-								<li><a href="#">Pages<span class="submenu-indicator"></span></a>
+								{{-- <li><a href="#">Pages<span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
 										<li><a href="#">Shop Pages<span class="submenu-indicator"></span></a>
 											<ul class="nav-dropdown nav-submenu">
@@ -104,33 +114,41 @@
 										<li><a href="signup.html">Signup</a></li>
 										<li><a href="forgot.html">Forgot</a></li>
 									</ul>
-								</li>
+								</li> --}}
 								@if(auth()->check())
-								<li class="active"><a href="/">Reports<span class="submenu-indicator"></span></a>
+								{{-- <li class="active"><a href="/">Reports<span class="submenu-indicator"></span></a>
 									<ul class="nav-dropdown nav-submenu">
 										<li><a href="/students">Students</a></li>
 										<li><a href="/classrooms">Classes</a></a></li>
 										<li><a href="/schools">Schools</a></li>
 										<li><a href="/courses">Courses</a></li>
 									</ul>
-								</li>
+								</li> --}}
 									<li><a href="#">Account<span class="submenu-indicator"></span></a>
+										
 										<ul class="nav-dropdown nav-submenu">
-											<a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+											<li>
+												<a class="nav-link" href="{{ route('users.edit',Auth::user()->id) }}">Profile</a>
+											</li>
 										</ul>
-										<ul class="nav-dropdown nav-submenu">
-											<a class="nav-link" href="{{ route('users.edit',Auth::user()->id) }}">Profile</a>
-										</ul>
+										{{-- <ul class="nav-dropdown nav-submenu">
+											<li>
+												<a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+											</li>
+										</ul> --}}
 									</li>
+									<li><a href="/dashboard">Dashboard</a></li>
 								@endif
+								<li><a href="">About us</a></li>
+								<li><a href="">Contact us</a></li>
+
 								
-								<li><a href="/dashboard">Dashboard</a></li>
 								
 							</ul>
 							@if(auth()->check())
 								<ul class="nav-menu nav-menu-social align-to-right">
 									
-									<li class="account-drop">
+									{{-- <li class="account-drop">
 										<a href="javascript:void(0);" class="crs_yuo12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<span class="embos_45"><i class="fas fa-shopping-basket"></i><i class="embose_count">4</i></span>
 										</a>
@@ -177,7 +195,7 @@
 												
 											</div>
 										</div>
-									</li>
+									</li> --}}
 									<li class="account-drop">
 										<a href="javascript:void(0);" class="crs_yuo12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<span class="embos_45"><i class="fas fa-bell"></i><i class="embose_count red">3</i></span>
@@ -457,8 +475,8 @@
 							</div>
 						</div>
 						<div class="crs_log__footer d-flex justify-content-between mt-0">
-							<div class="fhg_45"><p class="musrt">Don't have account? <a href="signup.html" class="theme-cl">SignUp</a></p></div>
-							<div class="fhg_45"><p class="musrt"><a href="forgot.html" class="text-danger">Forgot Password?</a></p></div>
+							<div class="fhg_45"><p class="musrt">Don't have account? <a href="/register" class="theme-cl">SignUp</a></p></div>
+							<div class="fhg_45"><p class="musrt"><a href="/password/reset" class="text-danger">Forgot Password?</a></p></div>
 						</div>
 					</div>
 				</div>

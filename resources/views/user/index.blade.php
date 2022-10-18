@@ -17,9 +17,16 @@
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
+                                <form method="GET" action="{{ route('users.index') }}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" name="search" class="form-control" placeholder="Search">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="btn btn-primary">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
                               </div>
                         </div>
                     </div>

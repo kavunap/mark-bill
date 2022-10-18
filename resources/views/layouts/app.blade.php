@@ -14,6 +14,11 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic"
+/>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -80,12 +85,16 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('classrooms.index') }}">{{ __('Classes') }}</a>
                                 </li>
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
-                                </li> --}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('users.teacher') }}">{{ __('Teachers') }}</a>
+                                </li>
                                 @if (Auth::user()->school !=null && Auth::user()->school->archives !=null && Auth::user()->school->archives->count()!=0)
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('beh.list') }}">{{ __('Behavior') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        
+
                                     </li>
                                 @endif
                                 
@@ -112,6 +121,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('dashboard.index') }}">{{ __('Users') }}</a>
                                 </li>
+                                
                             @endif
                         @endguest
                     </ul>
@@ -159,6 +169,11 @@
     document.getElementById("h1").innerHTML = "New Student List";
 </script> --}}
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js"></script>
+<script>
+  const { autocomplete } = window['@algolia/autocomplete-js'];
+</script>
+
  
     <script type="text/javascript">
       
@@ -181,5 +196,7 @@
         });
          
     </script>
+
+    
 </body>
 </html>

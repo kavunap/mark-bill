@@ -121,6 +121,7 @@
                                 @endforeach --}}
                                 @include('student.list')
                             </div>
+                            <div id="autocomplete"></div>
                             <div class="col-sm-4">
                                 {{-- <h3><strong>{{ $courses->count() }}</strong> Courses</h3>
                                 @foreach ($courses as $course )
@@ -134,7 +135,7 @@
                                         </form>
                                     </div>
                                 @endforeach --}}
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" id="autocomplete">
                                     <div class="card">
                                         <div class="card-header">
                                             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -220,5 +221,6 @@
                 </div>
             </div>
         </div>
+
     </section>
 @endsection

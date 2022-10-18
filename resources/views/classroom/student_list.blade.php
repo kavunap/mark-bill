@@ -15,11 +15,23 @@
                             <span id="card_title">
                                 {{ __('Student') }}
                             </span>
-
+                            <form method="GET" action="{{ route('beh.classList',request('classroom_id')) }}">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" name="search" class="form-control" placeholder="Search" value="{{request('search')}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-primary btn-sm">Search</button>
+                                        
+                                    </div>
+                                </div>
+                            </form>
                              <div class="float-right">
-                                <a href="{{ route('beh.list') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Back') }}
-                                </a>
+                                
+                                
+                                <a href="{{ route('beh.list') }}" class="btn btn-primary btn-sm float-left"  data-placement="left">
+                                    {{ __('Back') }}
+                                  </a>
                               </div>
                         </div>
                     </div>

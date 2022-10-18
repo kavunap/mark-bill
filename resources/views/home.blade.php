@@ -9,11 +9,11 @@
                     <div class="simple-search-wrap text-left">
                         <div class="hero_search-2">
                             <div class="elsio_tag">LISTEN TO OUR NEW ANTHEM</div>
-                            <h1 class="banner_title mb-4">Find the most exciting online cources</h1>
-                            <p class="font-lg mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+                            <h1 class="banner_title mb-4">Smart tools to digitalize your work</h1>
+                            <p class="font-lg mb-4">Working smart is better than working hard.</p>
                             <div class="input-group simple_search">
                                 <i class="fa fa-search ico"></i>
-                                <input type="text" class="form-control" placeholder="Search Your Cources">
+                                <input type="text" class="form-control" placeholder="Search Your service">
                                 <div class="input-group-append">
                                     <button class="btn theme-bg" type="button">Search</button>
                                 </div>
@@ -69,7 +69,7 @@
                                         <li>
                                             <div class="dro_140">
                                                 <div class="dro_141 st-2"><i class="fa fa-user-shield"></i></div>
-                                                <div class="dro_142"><h6>800k+ Enrolled<br>Students</h6></div>
+                                                <div class="dro_142"><h6>{{App\Models\Student::count()}}+ Enrolled<br>Schools</h6></div>
                                             </div>
                                         </li>
                                         <li>
@@ -90,7 +90,7 @@
     <!-- ============================ Our Awards End ================================== -->
 
     <!-- ============================ Latest cources Start ================================== -->
-    <section>
+    {{-- <section>
         <div class="container">
         
             <div class="row justify-content-center">
@@ -453,11 +453,11 @@
             </div>
             
         </div>
-    </section>
+    </section> --}}
     <!-- ============================ Latest cources End ================================== -->
 
     <!-- ============================ Our Instructor Start ================================== -->
-    <section class="pt-0">
+    {{-- <section class="pt-0">
         <div class="container">
         
             <div class="row justify-content-center">
@@ -676,11 +676,11 @@
             </div>
             
         </div>
-    </section>
+    </section> --}}
     <!-- ============================ Our Instructor End ================================== -->
 
     <!-- ============================ Categories Start ================================== -->
-    <section class="min gray">
+    {{-- <section class="min gray">
         <div class="container">
             
             <div class="row justify-content-center">
@@ -800,7 +800,7 @@
             </div>
             
         </div>
-    </section>
+    </section> --}}
     <div class="clearfix"></div>
     <!-- ============================ Categories End ================================== -->
 
@@ -908,8 +908,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-8">
                     <div class="sec-heading center">
-                        <h2>Our Students <span class="theme-cl">Reviews</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                        <h2>Our Schools <span class="theme-cl">Reviews</span></h2>
+                        <p>We offer best services with 24/7 support to the shools that need to work smart and minimize time spening in works.</p>
                     </div>
                 </div>
             </div>
@@ -1064,7 +1064,7 @@
     <!-- ============================ Students Reviews End ================================== -->
 
     <!-- ============================ Download App ================================== -->
-    <section class="pb-0">
+    {{-- <section class="pb-0">
         <div class="container">
             
             <div class="row align-items-center justify-content-between rounded m-0">
@@ -1090,7 +1090,7 @@
             </div>
             
         </div>
-    </section>
+    </section> --}}
     <div class="clearfix"></div>
     <!-- ============================ Download App ================================== -->
 

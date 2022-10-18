@@ -70,3 +70,5 @@ Route::resource('/behaviors', BehaviorController::class);
 Route::get('/add-behavior/{student}', [BehaviorController::class, 'add_behavior'])->middleware('auth')->name('student.addBehavior');
 Route::get('/beh-list', [BehaviorController::class, 'list'])->middleware('auth')->name('beh.list');
 Route::get('/beh-class/{classroom_id}', [BehaviorController::class, 'classList'])->middleware('auth')->name('beh.classList');
+Route::get('/student-search', [ClassroomController::class, 'searchStudent'])->middleware('auth')->name('st.search');
+Route::get('/user/teacher', [UserController::class, 'teachers'])->middleware('auth')->name('users.teacher');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Test;
 use App\Models\Course;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -76,14 +77,19 @@ class TestController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $test = Test::find($id);
-        $students = $test->course->classroom->students;
-
-        foreach ($students as $student) {
-            
+        if($request->has('search')){
+            $students = Student::search($request->get('search'))->where('classroom_id',$test->course->classroom_id)->paginate();
+    		// $students = $test->course->classroom->students()->searchable();	
+    	}else{
+            $students = $test->course->classroom->students;
         }
+        
+        // foreach ($students as $student) {
+            
+        // }
         return view('test.show', compact('test','students'));
     }
 

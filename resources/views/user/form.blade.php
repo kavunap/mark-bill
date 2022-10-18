@@ -11,12 +11,14 @@
             {{ Form::text('email', $user->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
             {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        @if (Auth::user()->user_role=="super_admin")
+        
             <div class="form-group">
                 {{ Form::label('status') }}
-                {{ Form::text('status', $user->status, ['class' => 'form-control' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Status']) }}
+                {{-- {{ Form::select('status', $user->status, ['class' => 'form-control' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Status']) }} --}}
+                {{Form::select('status', array('active' => 'Actve', 'disactive' => 'Disactive'), $user->status)}}
                 {!! $errors->first('status', '<div class="invalid-feedback">:message</div>') !!}
             </div>
+        @if (Auth::user()->user_role=="super_admin")
             <div class="form-group">
                 {{ Form::label('user_role') }} <br>
                 {{ Form::select('user_role' , array('super_admin' => 'Super Admin', 'admin' => 'Admin','teacher' => 'Teacher'),$user->user_role, ['width'=>'100%','placeholder' => 'User Role','height'=>'100px']) }}

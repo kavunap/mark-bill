@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 /**
  * Class UserController
@@ -23,12 +24,41 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate();
+        // $users = User::paginate();
 
+        // return view('user.index', compact('users'))
+        //     ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+
+        if($request->has('search')){
+    		$users = User::search($request->get('search'))->paginate();	
+    	}
+        else{
+    		$users = User::paginate();
+    	}
+        // return view('user.index', compact('users'));
         return view('user.index', compact('users'))
             ->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+    }
+
+    public function teachers(Request $request){
+        if($request->has('search')){
+            if(Auth::user()->user_role=='admin'){
+                $users=User::search($request->get('search'))->orderBy('name')->where('admin_id',Auth::user()->id)->paginate();
+            }
+            else{
+                $users=User::search($request->get('search'))->where('user_role','teacher')->paginate();
+            }
+            
+        }
+        elseif(Auth::user()->user_role=='admin'){
+            $users=User::where('user_role','teacher')->where('admin_id',Auth::user()->id)->paginate();
+        }
+        else{
+            $users = User::where('user_role','teacher')->paginate();
+        }
+        return view('user.teachers',compact('users'))->with('i', (request()->input('page', 1) - 1) * $users->perPage());
     }
 
     /**
@@ -93,7 +123,12 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        request()->validate(User::$rules);
+        request()->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'profile' => 'image|mimes:jpeg,png,jpg|max:2024',
+            'signature' => 'image|mimes:jpeg,png,jpg|max:2024',
+        ]);
         $data=$request->all();
         if($request->file('profile')){
             $file= $request->file('profile');
@@ -110,16 +145,20 @@ class UserController extends Controller
             $user->signature=$filename;
         }
         if($request->user_role){
-            $data['user_role ']= $request->user_role;
+            // $data['user_role ']= $request->user_role;
+            // $user->user_role=$data['user_role '];
+            $user->user_role=$request->user_role;
+        }
+        if($request->status){
+            $user->status=$request->status;
         }
         // $data->save();
-        $user->user_role=$data['user_role '];
-        $user->user_role=$request->user_role;
+    
         $user->name=$request->name;
         $user->email=$request->email;
         $user->status=$request->status;
         if ($user->save()) {
-            return redirect()->route('users.index')
+            return redirect()->route('users.teacher')
             ->with('success', 'User updated successfully');
         }
         else{

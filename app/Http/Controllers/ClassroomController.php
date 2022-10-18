@@ -19,7 +19,7 @@ class ClassroomController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-        $this->middleware('check_role')->except('index','show');
+        $this->middleware('check_role')->except('index','show','searchStudent');
         // $this->middleware('subscribed')->except('store');
     }
     
@@ -87,7 +87,7 @@ class ClassroomController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
         $classroom = Classroom::find($id);
         if(Auth::user()->user_role=='admin'){
@@ -102,7 +102,12 @@ class ClassroomController extends Controller
         
         // $students = $classroom->students;
         $new_student = new Student();
-        $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
+        if($request->has('search')){
+    		$students = Student::search($request->get('search'))->orderBy('name')->where('classroom_id',$classroom->id)->paginate();	
+    	}else{
+            $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
+        }
+        
         
         // $teachers= User::all()->where('user_role','=',"teacher")->pluck('name', 'id')->except(Auth::user()->id);
         $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
@@ -210,5 +215,13 @@ class ClassroomController extends Controller
     return $pdf->download("class$classroom->name.pdf");
     }
 
-    
+    public function searchStudent(Request $request){
+        $classroom=Classroom::find($request->class_id);
+        $students = Student::search($request->name)->where('classroom_id',$classroom->id)->paginate();
+        // $students=$classroom->students()->searchable();
+        // $students = Student::where('classroom_id',$classroom->id)->searchable();
+        // return redirect()->back()->with($students);
+        return view('student.index',compact('students','classroom'))->with('i', (request()->input('page', 1) - 1) * $students->perPage());
+    }
+
 }

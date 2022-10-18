@@ -15,12 +15,17 @@
                             <span id="card_title">
                                 {{ __('Student') }}
                             </span>
-
-                             <div class="float-right">
-                                <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
-                                </a>
-                              </div>
+                            <form action="{{route('st.search')}}" role="form" enctype="multipart/form-data" method="GET">
+                                
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-control" value="{{request()->name}}">
+                                </div>
+                                
+                                <input type="hidden" name="class_id" value="{{$classroom->id}}">
+                            </form>
+                        </div>
+                        <div float-right>
+                            
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -78,7 +83,7 @@
                                             </td>
 
                                             <td colspan="4">
-                                                @if (Auth::user()->user_role=='admin')
+                                                @if (Auth::user()->user_role=='admin' || Auth::user()->user_role=='super_admin')
                                                     
                                                 
                                                     <form action="{{ route('students.destroy',$student->id) }}" method="POST">
@@ -86,7 +91,7 @@
                                                         <a class="btn btn-sm btn-success" href="{{ route('students.edit',$student->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-fw fa-trash"></i> Delete</button>
                                                         <a href="{{ route('student.addBehavior',$student->id)}}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-edit"></i> Behavior</a>
                                                     </form>
                                                 @endif
