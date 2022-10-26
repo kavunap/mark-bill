@@ -834,8 +834,8 @@
                                 <li>Unlimited users(teachers)</li>
                                 <li>24/7 help</li>
                                 <li>Marks recoring and report generation</li>
-                                <li class="none">Personal Help Support</li>
-                                <li class="none">Enterprise SLA</li>
+                                <li class="none">Library control</li>
+                                <li class="none">Staff documents request</li>
                             </ul>
                         </div>
                         <div class="prt_footer">
@@ -852,16 +852,16 @@
                             <h4>Standard</h4>
                         </div>
                         <div class="prt_price">
-                            <h2><span>$</span>49</h2>
-                            <span>per user, per month</span>
+                            <h2><span>$</span>100</h2>
+                            <span>per year</span>
                         </div>
                         <div class="prt_body">
                             <ul>
-                                <li>99.5% Uptime Guarantee</li>
-                                <li>150GB CDN Bandwidth</li>
-                                <li>10GB Cloud Storage</li>
-                                <li>Personal Help Support</li>
-                                <li class="none">Enterprise SLA</li>
+                                <li>Unlimited users(teachers)</li>
+                                <li>24/7 help</li>
+                                <li>Marks recoring and report generation</li>
+                                <li>Library control</li>
+                                <li class="none">Staff documents request</li>
                             </ul>
                         </div>
                         <div class="prt_footer">
@@ -877,16 +877,16 @@
                             <h4>Platinum</h4>
                         </div>
                         <div class="prt_price">
-                            <h2><span>$</span>79</h2>
-                            <span>2 user, per month</span>
+                            <h2><span>$</span>150</h2>
+                            <span>Per year</span>
                         </div>
                         <div class="prt_body">
                             <ul>
-                                <li>100% Uptime Guarantee</li>
-                                <li>200GB CDN Bandwidth</li>
-                                <li>20GB Cloud Storage</li>
-                                <li>Personal Help Support</li>
-                                <li>Enterprise SLA</li>
+                                <li>Unlimited users(teachers)</li>
+                                <li>24/7 help</li>
+                                <li>Marks recoring and report generation</li>
+                                <li>Library control</li>
+                                <li>Staff documents request</li>
                             </ul>
                         </div>
                         <div class="prt_footer">

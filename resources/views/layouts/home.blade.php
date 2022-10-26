@@ -321,7 +321,7 @@
 							
 							<div class="col-lg-5 col-md-5">
 								<div class="footer_widget">
-									<img src="assets/img/logo-light.png" class="img-footer small mb-2" alt="" />
+									<img src="{{asset('assets/img/logo.jpeg')}}" class="img-footer small mb-2" alt="" />
 									<h4 class="extream mb-3">Do you need help with<br>anything?</h4>
 									<p>Receive updates, hot deals, new features, discounts sent straignt in your inbox every month</p>
 									<div class="foot-news-last">
@@ -389,7 +389,7 @@
 					<div class="container">
 						<div class="row align-items-center">
 							<div class="col-lg-12 col-md-12 text-center">
-								<p class="mb-0">© 2021 SkillUp. Designd By <a href="">BTech ltd</a>.</p>
+								<p class="mb-0">© {{Carbon\Carbon::now()->format('Y')}} MarksHub. Designd By <a href="">BTech ltd</a>.</p>
 							</div>
 						</div>
 					</div>
