@@ -57,7 +57,7 @@
                                         <li>
                                             <div class="dro_140">
                                                 <div class="dro_141"><i class="fa fa-layer-group"></i></div>
-                                                <div class="dro_142"><h6>Best Online<br>Tutoring</h6></div>
+                                                <div class="dro_142"><h6>Best Online<br>Marking solution</h6></div>
                                             </div>
                                         </li>
                                         <li>
@@ -69,7 +69,7 @@
                                         <li>
                                             <div class="dro_140">
                                                 <div class="dro_141 st-2"><i class="fa fa-user-shield"></i></div>
-                                                <div class="dro_142"><h6>{{App\Models\Student::count()}}+ Enrolled<br>Schools</h6></div>
+                                                <div class="dro_142"><h6>{{App\Models\School::count()}}+ <br>Schools</h6></div>
                                             </div>
                                         </li>
                                         <li>
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>Enrolled
                 </div>
             </div>
         </div>
@@ -812,7 +812,7 @@
                 <div class="col-lg-7 col-md-8">
                     <div class="sec-heading center">
                         <h2>Select Your <span class="theme-cl">Package</span></h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                        <p>The features you will have in your dashboard will depend on the package you have. This means that the best package will have more features.</p>
                     </div>
                 </div>
             </div>
@@ -826,14 +826,14 @@
                             <h4>Basic</h4>
                         </div>
                         <div class="prt_price">
-                            <h2><span>$</span>29</h2>
-                            <span>per user, per month</span>
+                            <h2><span>$</span>70</h2>
+                            <span>per year</span>
                         </div>
                         <div class="prt_body">
                             <ul>
-                                <li>99.5% Uptime Guarantee</li>
-                                <li>120GB CDN Bandwidth</li>
-                                <li>5GB Cloud Storage</li>
+                                <li>Unlimited users(teachers)</li>
+                                <li>24/7 help</li>
+                                <li>Marks recoring and report generation</li>
                                 <li class="none">Personal Help Support</li>
                                 <li class="none">Enterprise SLA</li>
                             </ul>
@@ -902,7 +902,7 @@
     <!-- ============================ Pricing Table End ================================== -->
 
     <!-- ============================ Students Reviews ================================== -->
-    <section class="gray">
+    {{-- <section class="gray">
         <div class="container">
         
             <div class="row justify-content-center">
@@ -1060,7 +1060,7 @@
             </div>
             
         </div>
-    </section>
+    </section> --}}
     <!-- ============================ Students Reviews End ================================== -->
 
     <!-- ============================ Download App ================================== -->
@@ -1103,7 +1103,7 @@
                     <div class="call_action_wrap">
                         <div class="call_action_wrap-head">
                             <h3>Do You Have Questions ?</h3>
-                            <span>We'll help you to grow your career and growth.</span>
+                            <span>We'll help you to manage your school, library, stock, and so on.</span>
                         </div>
                         <a href="#" class="btn btn-call_action_wrap">Contact Us Today</a>
                     </div>
