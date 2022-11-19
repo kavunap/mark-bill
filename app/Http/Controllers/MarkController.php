@@ -133,33 +133,60 @@ class MarkController extends Controller
     }
 
     public function inline_update(Request $request){
-        if ($request->ajax()) {
-            // $student=Student::find($request->student_id);
+        $mark= Mark::find($request->pk);
+        $student=$mark->student;
 
-            $mark= Mark::find($request->pk);
-            $student=$mark->student;
-            $previous_mark=$mark->marks;
-            $mark->update([
+        if($request->value > $mark->test->max){
+            // return redirect()->back()->withErrors('Marks can not be greater than maximum');
+            $request->session()->flash('message', 'Marks can not be updated.');
+            $request->session()->flash('message-type', 'danger');
+            return response()->json(['error' => 'Marks can not be greater than maximum']);
+        }
+        
+        else{
+            if ($request->ajax()) {
+                // $student=Student::find($request->student_id);
 
-                $request->name => $request->value
+                $previous_mark=$mark->marks;
+                $mark->update([
 
-            ]);
-            if($mark->test->term == 'Term 1'){
-                $value=$student->total_term1-$previous_mark;
-                $value+=$request->value;
-                $student->total_term1=$value;
-                $student->save();
+                    $request->name => $request->value
+
+                ]);
+                if($mark->test->term == 'Term 1'){
+                    $value=$student->total_term1-$previous_mark;
+                    $value+=$request->value;
+                    $student->total_term1=$value;
+                    $student->save();
+                }
+
+                elseif($mark->test->term == 'Term 2'){
+                    $value=$student->total_term2-$previous_mark;
+                    $value+=$request->value;
+                    $student->total_term2=$value;
+                    $student->save();
+                }
+
+                elseif($mark->test->term == 'Term 3'){
+                    $value=$student->total_term3-$previous_mark;
+                    $value+=$request->value;
+                    $student->total_term3=$value;
+                    $student->save();
+                }
+                // Mark::find($request->pk)
+
+                //     ->update([
+
+                //         $request->name => $request->value
+
+                //     ]);
+                $request->session()->flash('message', 'Marks updated successfully.');
+                $request->session()->flash('message-type', 'success');
+                // \Session::reflash();
+                $request->session()->reflash();
+                return response()->json(['success' => 'Marks updated successfully']);
+
             }
-            // Mark::find($request->pk)
-
-            //     ->update([
-
-            //         $request->name => $request->value
-
-            //     ]);
-
-            return response()->json(['success' => true]);
-
         }
     }
 
