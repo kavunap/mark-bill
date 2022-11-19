@@ -211,7 +211,9 @@ class ClassroomController extends Controller
         }
     $school=$classroom->school;
         
-    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('classroom.report',compact('classroom','school','term'))->setPaper('a4', 'portrait');   
+    $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+    ->loadView('classroom.report',compact('classroom','school','term'))
+    ->setPaper('a4', 'landscape');
     return $pdf->download("class$classroom->name.pdf");
     }
 

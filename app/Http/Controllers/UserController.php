@@ -59,6 +59,7 @@ class UserController extends Controller
             $users = User::where('user_role','teacher')->paginate();
         }
         return view('user.teachers',compact('users'))->with('i', (request()->input('page', 1) - 1) * $users->perPage());
+        // return view('user.list',compact('users'))->with('i', (request()->input('page', 1) - 1) * $users->perPage());
     }
 
     /**
@@ -167,6 +168,22 @@ class UserController extends Controller
         
 
         
+    }
+
+    public function inline_update(Request $request){
+        if ($request->ajax()) {
+
+            User::find($request->pk)
+
+                ->update([
+
+                    $request->name => $request->value
+
+                ]);
+
+            return response()->json(['success' => true]);
+
+        }
     }
 
     /**

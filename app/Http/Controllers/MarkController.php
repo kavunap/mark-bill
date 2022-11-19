@@ -132,6 +132,37 @@ class MarkController extends Controller
             ->with('success', 'Mark updated successfully');
     }
 
+    public function inline_update(Request $request){
+        if ($request->ajax()) {
+            // $student=Student::find($request->student_id);
+
+            $mark= Mark::find($request->pk);
+            $student=$mark->student;
+            $previous_mark=$mark->marks;
+            $mark->update([
+
+                $request->name => $request->value
+
+            ]);
+            if($mark->test->term == 'Term 1'){
+                $value=$student->total_term1-$previous_mark;
+                $value+=$request->value;
+                $student->total_term1=$value;
+                $student->save();
+            }
+            // Mark::find($request->pk)
+
+            //     ->update([
+
+            //         $request->name => $request->value
+
+            //     ]);
+
+            return response()->json(['success' => true]);
+
+        }
+    }
+
     /**
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse

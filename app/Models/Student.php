@@ -41,7 +41,7 @@ class Student extends Model
 
     static $rules = [
 		'name' => 'required',
-		'parent_phone' => 'required|min:10|max:10',
+		// 'parent_phone' => 'min:10|max:10',
 		'classroom_id' => 'required',
     ];
 

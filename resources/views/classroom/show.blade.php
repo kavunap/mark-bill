@@ -91,6 +91,7 @@
             
                                     </form>
                                 </div>
+                                @endif
                                 <div class="col-sm-4">
                                     <h3>Add Student</h3>
                                         <form action="{{ route('students.store') }}" method="POST">
@@ -104,7 +105,7 @@
                                             </div>
                                         </form>
                                 </div>
-                            @endif
+                            
                         </div>
                     </div>
 

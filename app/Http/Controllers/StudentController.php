@@ -19,7 +19,7 @@ class StudentController extends Controller
     {
 
         $this->middleware(['auth']);
-        $this->middleware('check_role')->only('store','update','edit');
+        // $this->middleware('check_role')->only('store','update','edit');
         // $this->middleware('subscribed')->except('store');
     }
     /**

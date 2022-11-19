@@ -2,7 +2,7 @@
 @foreach ($classroom->students->sortByDesc('total_term1') as $student)
 <!DOCTYPE html>
 
-<html>
+<html >
 	
 <head>
 <style>
@@ -41,7 +41,7 @@
 	}
 
 	@page {
-        size: a4 landscape; 
+        size: a4 portrait; 
         margin:0.9;padding:0.9; // you can set margin and padding 0 
       }
 	  @media print {
@@ -60,7 +60,7 @@
 		<a class="btn btn-primary" href="{{ route('download',$classroom->id) }}" target="blank">Export to PDF</a>
 	</div> --}}
 	
-		<table style="width:100%;table-layout:fixed; border: 1px solid black; margin-right:10px">
+		<table style="table-layout:fixed; border: 1px solid black; margin-left:5px; page-break-after: always; margin-top:5%; width:98%">
 		<tr style="width:100%;height:20%">
 		<th colspan="16">
 		<div style="text-align:left">
@@ -87,7 +87,7 @@
 		
 		<tr>
 		
-			<td rowspan="2">subject</td>
+			<td rowspan="2" style="width: 5%">subject</td>
 			<td colspan="3">Max point</td>
 			<td colspan="3">1st term</td>
 			<td colspan="3">2nd term</td>

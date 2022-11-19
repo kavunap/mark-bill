@@ -72,3 +72,5 @@ Route::get('/beh-list', [BehaviorController::class, 'list'])->middleware('auth')
 Route::get('/beh-class/{classroom_id}', [BehaviorController::class, 'classList'])->middleware('auth')->name('beh.classList');
 Route::get('/student-search', [ClassroomController::class, 'searchStudent'])->middleware('auth')->name('st.search');
 Route::get('/user/teacher', [UserController::class, 'teachers'])->middleware('auth')->name('users.teacher');
+Route::post('users/update', [UserController::class, 'inline_update'])->name('users.inline_update');
+Route::post('marks/update', [MarkController::class, 'inline_update'])->name('marks.inline_update');

@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
+
+    <script>$.fn.poshytip={defaults:null}</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
+
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -123,7 +135,16 @@
                 <tr>
                     <td scope="row">{{ $student->id }}</td>
                     <td>{{ $student->name }}</td>
-                    <td>@if($test->marks->where('student_id',$student->id)->first()!=null) {{ $test->marks->where('student_id',$student->id)->first()->marks }}@endif</td>
+                    {{-- <td>@if($test->marks->where('student_id',$student->id)->first()!=null) {{ $test->marks->where('student_id',$student->id)->first()->marks }}@endif</td> --}}
+                    <td>
+                        @if($test->marks->where('student_id',$student->id)->first()!=null)
+                        @php
+                            $mark=$test->marks->where('student_id',$student->id)->first();
+                        @endphp
+                        <a href="" class="update" data-name="marks" data-type="number" data-pk="{{ $mark->id }}" data-title="Enter marks">{{ $mark->marks }}</a>
+                        @endif
+
+                    </td>
                     <td class="form-inline">
                         {{-- <form action="{{ route('students.destroy', $student->id) }}" method="POST">
 
@@ -202,6 +223,39 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+
+        $.fn.editable.defaults.mode = 'inline';
+    
+      
+    
+        $.ajaxSetup({
+    
+            headers: {
+    
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+    
+            }
+    
+        }); 
+    
+      
+    
+        $('.update').editable({
+    
+               url: "{{ route('marks.inline_update') }}",
+    
+               type: 'number',
+    
+               pk: 1,
+    
+               name: 'marks',
+    
+               title: 'Enter marks'
+    
+        });
+    
+    </script>
 
     <script>
         // display a modal (small modal)

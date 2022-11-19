@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
+
+    <script>$.fn.poshytip={defaults:null}</script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -13,7 +25,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('User') }}
+                                {{ __('Teachers') }}
                             </span>
 
                              <div class="float-right">
@@ -58,17 +70,33 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $user->name }}</td>
-											<td>{{ $user->email }}</td>
-											<td>{{ $user->status }}</td>
+											{{-- <td>{{ $user->name }}</td> --}}
+                                            <td>
+
+                                                <a href="" class="update" data-name="name" data-type="text" data-pk="{{ $user->id }}" data-title="Enter name">{{ $user->name }}</a>
+                        
+                                            </td>
+											{{-- <td>{{ $user->email }}</td> --}}
+                                            <td>
+
+                                                <a href="" class="update" data-name="email" data-type="text" data-pk="{{ $user->id }}" data-title="Enter email">{{ $user->email }}</a>
+                        
+                                            </td>
+											{{-- <td>{{ $user->status }}</td> --}}
+                                            <td>
+
+                                                <a href="" class="update" data-name="status" data-type="text" data-pk="{{ $user->id }}" data-title="Enter Status">{{ $user->status }}</a>
+                        
+                                            </td>
 											<td>{{ $user->user_role }}</td>
+                                            
 											<td>{{ $user->profile }}</td>
 											<td>{{ $user->signature }}</td>
 
                                             <td>
                                                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('users.show',$user->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> Edit</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('users.edit',$user->id) }}"><i class="fa fa-fw fa-edit"></i> Change profile</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Delete</button>
@@ -85,4 +113,38 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+
+        $.fn.editable.defaults.mode = 'inline';
+    
+      
+    
+        $.ajaxSetup({
+    
+            headers: {
+    
+                'X-CSRF-TOKEN': '{{csrf_token()}}'
+    
+            }
+    
+        }); 
+    
+      
+    
+        $('.update').editable({
+    
+               url: "{{ route('users.inline_update') }}",
+    
+               type: 'text',
+    
+               pk: 1,
+    
+               name: 'name',
+    
+               title: 'Enter name'
+    
+        });
+    
+    </script>
 @endsection
