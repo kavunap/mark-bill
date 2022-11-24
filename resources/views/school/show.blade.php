@@ -5,6 +5,15 @@
 @endsection
 
 @section('content')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -66,6 +75,16 @@
                             </div>
                             <div class="col-sm-4">
                                 <h3>{{ $school->archives->count() }} <strong>Academic Year</strong><br></h3> 
+                                
+                                <div class="form-group">
+
+                                    <label for="name">Search by year</label>
+
+                                    <input type="text" name="name" id="name" class="form-control" autocomplete="off">
+
+                                </div>
+
+                                <div id="product_list"></div>
                                 {{-- @foreach ($archives as $archive )
                                     <div class="form-group">
                                         
@@ -116,5 +135,46 @@
                 </div>
             </div>
         </div>
+
+        
     </section>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            $('#name').on('keyup',function () {
+
+                var query = $(this).val();
+
+                $.ajax({
+
+                    url:'{{ route('search') }}',
+
+                    type:'GET',
+
+                    data:{'name':query},
+
+                    success:function (data) {
+
+                        $('#product_list').html(data);
+
+                    }
+
+                })
+
+            });
+
+            $(document).on('click', 'li', function(){
+
+                var value = $(this).text();
+
+                $('#name').val(value);
+
+                $('#product_list').html("");
+
+            });
+
+        });
+
+    </script>   
 @endsection

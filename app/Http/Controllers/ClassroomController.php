@@ -102,8 +102,9 @@ class ClassroomController extends Controller
         
         // $students = $classroom->students;
         $new_student = new Student();
-        if($request->has('search')){
-    		$students = Student::search($request->get('search'))->orderBy('name')->where('classroom_id',$classroom->id)->paginate();	
+        if($request->has('name')){
+    		// $students = Student::search($request->get('search'))->orderBy('name')->where('classroom_id',$classroom->id)->paginate();	
+            $students = Student::where('name','LIKE',$request->name.'%')->orderBy('name')->where('classroom_id',$classroom->id)->paginate();
     	}else{
             $students = Student::orderBy('name')->where('classroom_id',$classroom->id)->paginate();
         }
@@ -216,6 +217,43 @@ class ClassroomController extends Controller
     ->setPaper('a4', 'landscape');
     return $pdf->download("class$classroom->name.pdf");
     }
+
+    public function autosearch(Request $request)
+
+    {
+
+        if ($request->ajax()) {
+
+            $data = Classroom::where('name','LIKE',$request->name.'%')->get();
+
+            $output = '';
+
+            if (count($data)>0) {
+
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+
+                foreach ($data as $row) {
+
+                    $output .= '<li class="list-group-item">'.$row->name.'</li>';
+
+                }
+
+                $output .= '</ul>';
+
+            }else {
+
+                $output .= '<li class="list-group-item">'.'No Data Found'.'</li>';
+
+            }
+
+            return $output;
+
+        }
+
+        return view('autosearch');  
+
+    }
+
 
     public function searchStudent(Request $request){
         $classroom=Classroom::find($request->class_id);

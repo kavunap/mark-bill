@@ -16,7 +16,7 @@
                         <form method="GET" action="{{ route('classrooms.show',$classroom->id) }}">
                           <div class="row">
                               <div class="col-md-6">
-                                  <input type="text" name="search" class="form-control" placeholder="Search">
+                                  <input type="text" name="name" class="form-control" placeholder="Search">
                               </div>
                               <div class="col-md-6">
                                   <button class="btn btn-primary">Search</button>

@@ -29,10 +29,45 @@ class ArchiveController extends Controller
 
     public function index()
     {
+        
         $archives = Archive::paginate();
 
         return view('archive.index', compact('archives'))
             ->with('i', (request()->input('page', 1) - 1) * $archives->perPage());
+    }
+   
+
+    public function autosearch(Request $request)
+    {
+
+        if ($request->ajax()) {
+
+            $data = Archive::where('year','LIKE',$request->name.'%')->get();
+
+            $output = '';
+
+            if (count($data)>0) {
+
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+
+                foreach ($data as $row) {
+
+                    $output .= '<a href="/archives/'.$row->id.'">'.'<li class="list-group-item">'.$row->year.'</li>';
+
+                }
+
+                $output .= '</ul>'.'</a>';
+
+            }else {
+
+                $output .= '<li class="list-group-item">'.'No Data Found'.'</li>';
+
+            }
+
+            return $output;
+
+        }
+
     }
 
     /**
@@ -74,16 +109,22 @@ class ArchiveController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
-        $archive = Archive::find($id);
-        $classrooms=$archive->classrooms;
-        $classroom= new Classroom();
-        $archive_id=$archive->id;
-        $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
-
-
-        return view('archive.show', compact('archive','classrooms','classroom','teachers'));
+        
+    
+            $archive = Archive::find($id);
+            
+            $classroom= new Classroom();
+            $archive_id=$archive->id;
+            $teachers= User::all()->where('user_role',"teacher")->where('admin_id',Auth::user()->id)->pluck('name', 'id')->except(Auth::user()->id);
+            if($request->has('name')){
+                $classrooms = Classroom::where('name','LIKE',$request->name.'%')->orderBy('name')->where('archive_id',$archive->id)->paginate();	
+            }else{
+                $classrooms=$archive->classrooms;
+            }
+            return view('archive.show', compact('archive','classrooms','classroom','teachers'));
+    
     }
 
     /**

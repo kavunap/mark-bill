@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -62,6 +63,27 @@
             </div>
             <div class="col-sm-4">
                 <h3>{{ $archive->classrooms->count() }} <strong>Classses</strong><br></h3> 
+
+                {{-- <div class="form-group">
+
+                    <label for="name">Search by name</label>
+
+                    <input type="text" name="name" id="name" class="form-control" autocomplete="off">
+                    <button type="submit">Search</button>
+
+                </div> --}}
+                <form method="GET" action="{{ route('archives.show',$archive->id) }}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="name" class="form-control" placeholder="Search">
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="product_list"></div>
                 {{-- @foreach ($classrooms as $class )
                     <div class="form-group">
                         
@@ -112,4 +134,44 @@
             </div>
         </div>
     </section>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            $('#name').on('keyup',function () {
+
+                var query = $(this).val();
+
+                $.ajax({
+
+                    url:'{{ route('search') }}',
+
+                    type:'GET',
+
+                    data:{'name':query},
+
+                    success:function (data) {
+
+                        $('#product_list').html(data);
+
+                    }
+
+                })
+
+            });
+
+            $(document).on('click', 'li', function(){
+
+                var value = $(this).text();
+
+                $('#name').val(value);
+
+                $('#product_list').html("");
+
+            });
+
+        });
+
+    </script>   
 @endsection
